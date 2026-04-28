@@ -63,29 +63,73 @@
   .map-head{padding:16px 22px;border-bottom:1.5px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;background:var(--paper-2)}
   .map-head h3{font-family:"Fraunces",serif;font-size:22px;font-weight:600}
   .map-head h3 small{display:block;font-family:"Lora",serif;font-style:italic;font-size:13px;color:var(--ink-soft);font-weight:400;margin-top:2px}
-  .map-legend{display:flex;gap:14px;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;flex-wrap:wrap}
+  .map-legend{display:flex;gap:14px;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;flex-wrap:wrap;color:var(--ink-soft)}
   .map-legend span{display:flex;align-items:center;gap:6px}
   .map-legend .dot{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--rule)}
-  .gmap-frame{display:block;width:100%;height:520px;border:0;background:var(--paper-2)}
-  .map-stops{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0;border-top:1.5px solid var(--rule)}
-  .stop-card{
-    display:flex;align-items:center;gap:12px;padding:14px 16px;
-    border-right:1px dashed var(--rule);border-bottom:1px dashed var(--rule);
-    text-decoration:none;color:inherit;background:var(--paper);
-    transition:background .15s ease;
+
+  #gmap{width:100%;height:520px;background:var(--paper-2);position:relative}
+  @media(max-width:720px){#gmap{height:440px}}
+  .map-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);text-align:center;padding:0 24px}
+
+  /* InfoWindow paper aesthetic — overrides Google's default white bubble */
+  .gm-style .gm-style-iw-c{
+    background:var(--paper)!important;
+    border:1.5px solid var(--rule)!important;
+    border-radius:0!important;
+    box-shadow:5px 5px 0 var(--ink)!important;
+    padding:0!important;
+    max-width:280px!important;
   }
-  .stop-card:hover{background:var(--paper-2)}
-  .stop-card .stop-num{
-    width:30px;height:30px;border-radius:50%;border:1.5px solid var(--rule);
-    display:flex;align-items:center;justify-content:center;
-    font-family:"Fraunces",serif;font-weight:700;color:var(--paper);font-size:13px;
-    box-shadow:2px 2px 0 var(--ink);flex-shrink:0;
+  .gm-style .gm-style-iw-d{overflow:auto!important;max-height:none!important;background:var(--paper)!important}
+  .gm-style .gm-style-iw-tc::after{background:var(--paper)!important;box-shadow:-1.5px 1.5px 0 var(--ink)!important}
+  .gm-style .gm-style-iw-chr{position:absolute;top:0;right:0;z-index:2}
+  .gm-style .gm-style-iw button.gm-ui-hover-effect{
+    width:28px!important;height:28px!important;
+    background:var(--paper-2)!important;border-left:1px solid var(--rule)!important;border-bottom:1px solid var(--rule)!important;opacity:1!important;
   }
-  .stop-card .stop-info{min-width:0;flex:1}
-  .stop-card .stop-name{font-family:"Fraunces",serif;font-size:15px;font-weight:600;line-height:1.15;color:var(--ink)}
-  .stop-card .stop-tag{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-top:3px}
-  .stop-card .stop-arrow{font-family:"Fraunces",serif;color:var(--rust);font-size:18px;flex-shrink:0;opacity:.5;transition:opacity .15s, transform .15s}
-  .stop-card:hover .stop-arrow{opacity:1;transform:translateX(3px)}
+  .gm-style .gm-style-iw button.gm-ui-hover-effect>span{margin:6px!important;background-color:var(--ink)!important}
+
+  .gm-info{font-family:"Lora",serif;width:240px;color:var(--ink)}
+  .gm-info .gm-day{
+    display:inline-block;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--paper);padding:4px 10px;margin:14px 14px 8px;
+  }
+  .gm-info h4{font-family:"Fraunces",serif;font-size:19px;font-weight:600;margin:0 14px 6px;line-height:1.15;letter-spacing:-.005em}
+  .gm-info p{margin:0 14px 12px;font-style:italic;font-size:13.5px;color:var(--ink-soft);line-height:1.4}
+  .gm-info .gm-link{
+    display:block;margin:0;padding:10px 14px;
+    border-top:1px dashed var(--rule);background:var(--paper-2);
+    font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--rust-deep);text-decoration:none;text-align:center;
+    transition:background .15s;
+  }
+  .gm-info .gm-link:hover{background:var(--paper-3)}
+
+  .day-photos{display:flex;flex-direction:column;gap:14px}
+  .day-photo{
+    position:relative;aspect-ratio:4/3;background:var(--paper-3);overflow:hidden;
+    border:1.5px solid var(--rule);box-shadow:3px 3px 0 var(--ink);
+    text-decoration:none;color:inherit;display:block;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .day-photo:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--rust)}
+  .day-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;filter:saturate(.92) contrast(1.04)}
+  .day-photo:hover img{transform:scale(1.05)}
+  .day-photo .day-photo-cap{
+    position:absolute;left:0;right:0;bottom:0;padding:18px 12px 10px;
+    background:linear-gradient(to top,rgba(27,31,42,.94) 5%,rgba(27,31,42,.55) 60%,rgba(27,31,42,0));
+    color:var(--paper);font-family:"Fraunces",serif;font-size:15px;font-weight:600;line-height:1.18;
+    text-shadow:0 1px 2px rgba(0,0,0,.6);
+  }
+  .day-photo .day-photo-cap small{display:block;font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.14em;font-weight:400;opacity:.9;margin-top:3px;text-transform:uppercase}
+  .day-photo .day-photo-num{
+    position:absolute;top:8px;left:8px;width:24px;height:24px;border-radius:50%;
+    border:1.5px solid rgba(242,235,221,.85);display:flex;align-items:center;justify-content:center;
+    font-family:"Fraunces",serif;font-weight:700;font-size:11px;color:var(--paper);
+    box-shadow:1px 1px 0 rgba(0,0,0,.4);
+  }
+  .day-photo.skel{background:linear-gradient(90deg,var(--paper-2) 25%,var(--paper-3) 50%,var(--paper-2) 75%);background-size:200% 100%;animation:skel 1.4s infinite}
+  @keyframes skel{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
   .day{border:1.5px solid var(--rule);margin-bottom:28px;background:var(--paper);box-shadow:5px 5px 0 var(--ink);overflow:hidden}
   .day-illustration{width:100%;height:200px;display:block;border-bottom:1.5px solid var(--rule)}
@@ -97,7 +141,13 @@
   .day-cost{font-family:"Fraunces",serif;font-style:italic;text-align:right;font-size:14px;color:var(--ink-soft)}
   .day-cost b{display:block;font-style:normal;font-size:28px;font-weight:600;color:var(--ink)}
 
-  .day-body{padding:24px 28px 26px}
+  .day-body{padding:24px 28px 26px;display:grid;grid-template-columns:1fr 240px;gap:30px;align-items:start}
+  .day-main{min-width:0}
+  @media(max-width:820px){
+    .day-body{grid-template-columns:1fr;gap:22px}
+    .day-photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+    .day-photo{aspect-ratio:3/2}
+  }
   .timeline{display:grid;grid-template-columns:90px 1fr;gap:0;margin-bottom:18px}
   .tl-time{font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--moss-deep);font-weight:500;border-right:1.5px solid var(--rule);padding:10px 14px 10px 0;text-align:right;position:relative}
   .tl-time::after{content:"";position:absolute;right:-5px;top:14px;width:9px;height:9px;background:var(--rust);border:1.5px solid var(--rule);border-radius:50%}
@@ -195,7 +245,7 @@
 <div class="sec-label">The Route · Interactive Map</div>
 <div class="map-wrap">
   <div class="map-head">
-    <h3>The Bernese Oberland route<small>tap any stop below to open it in Google Maps</small></h3>
+    <h3>The Bernese Oberland route<small>tap any pin to see details · drag to explore</small></h3>
     <div class="map-legend">
       <span><span class="dot" style="background:#B5462E"></span>Day 1</span>
       <span><span class="dot" style="background:#3F5A45"></span>Day 2</span>
@@ -203,69 +253,7 @@
       <span><span class="dot" style="background:#8C2F1E"></span>Day 4</span>
     </div>
   </div>
-  <iframe
-    class="gmap-frame"
-    src="https://maps.google.com/maps?saddr=Z%C3%BCrich+HB&daddr=Interlaken+Ost+to:Wilderswil+to:Schynige+Platte+to:Kandersteg+to:Spiez+to:Thun+to:Bern&t=&z=9&ie=UTF8&iwloc=&output=embed"
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade"
-    allowfullscreen></iframe>
-  <div class="map-stops">
-    <a class="stop-card" href="https://www.google.com/maps/search/?api=1&query=47.3782,8.5402" target="_blank" rel="noopener">
-      <div class="stop-num" style="background:#B5462E">1</div>
-      <div class="stop-info"><div class="stop-name">Zürich HB</div><div class="stop-tag">Day 1 · Departure</div></div>
-      <div class="stop-arrow">→</div>
-    </a>
-    <a class="stop-card" href="https://www.google.com/maps/search/?api=1&query=46.6904,7.8691" target="_blank" rel="noopener">
-      <div class="stop-num" style="background:#B5462E">2</div>
-      <div class="stop-info"><div class="stop-name">Interlaken Ost</div><div class="stop-tag">Day 1 · Sleep here</div></div>
-      <div class="stop-arrow">→</div>
-    </a>
-    <a class="stop-card" href="https://www.google.com/maps/search/?api=1&query=46.6614,7.8597" target="_blank" rel="noopener">
-      <div class="stop-num" style="background:#B5462E">3</div>
-      <div class="stop-info"><div class="stop-name">Wilderswil</div><div class="stop-tag">Day 1 · Cogwheel base</div></div>
-      <div class="stop-arrow">→</div>
-    </a>
-    <a class="stop-card" href="https://www.google.com/maps/search/?api=1&query=46.6469,7.9097" target="_blank" rel="noopener">
-      <div class="stop-num" style="background:#B5462E">4</div>
-      <div class="stop-info"><div class="stop-name">Schynige Platte</div><div class="stop-tag">Day 1 · 1,967m peak</div></div>
-      <div class="stop-arrow">→</div>
-    </a>
-    <a class="stop-card" href="https://www.google.com/maps/search/?api=1&query=46.6359,7.9011" target="_blank" rel="noopener">
-      <div class="stop-num" style="background:#B5462E">5</div>
-      <div class="stop-info"><div class="stop-name">Gündlischwand</div><div class="stop-tag">Day 1 · Chalet village</div></div>
-      <div class="stop-arrow">→</div>
-    </a>
-    <a class="stop-card" href="https://www.google.com/maps/search/?api=1&query=46.6886,7.6797" target="_blank" rel="noopener">
-      <div class="stop-num" style="background:#3F5A45">6</div>
-      <div class="stop-info"><div class="stop-name">Spiez</div><div class="stop-tag">Day 2 · Lakeside change</div></div>
-      <div class="stop-arrow">→</div>
-    </a>
-    <a class="stop-card" href="https://www.google.com/maps/search/?api=1&query=46.4961,7.6755" target="_blank" rel="noopener">
-      <div class="stop-num" style="background:#3F5A45">7</div>
-      <div class="stop-info"><div class="stop-name">Kandersteg</div><div class="stop-tag">Day 2 · Sleep here</div></div>
-      <div class="stop-arrow">→</div>
-    </a>
-    <a class="stop-card" href="https://www.google.com/maps/search/?api=1&query=46.4992,7.7261" target="_blank" rel="noopener">
-      <div class="stop-num" style="background:#3F5A45">8</div>
-      <div class="stop-info"><div class="stop-name">Oeschinensee</div><div class="stop-tag">Day 2 · Turquoise lake</div></div>
-      <div class="stop-arrow">→</div>
-    </a>
-    <a class="stop-card" href="https://www.google.com/maps/search/?api=1&query=46.7607,7.6280" target="_blank" rel="noopener">
-      <div class="stop-num" style="background:#5C7C95">9</div>
-      <div class="stop-info"><div class="stop-name">Thun</div><div class="stop-tag">Day 3 · Boat docks</div></div>
-      <div class="stop-arrow">→</div>
-    </a>
-    <a class="stop-card" href="https://www.google.com/maps/search/?api=1&query=46.9480,7.4474" target="_blank" rel="noopener">
-      <div class="stop-num" style="background:#5C7C95">10</div>
-      <div class="stop-info"><div class="stop-name">Bern Old Town</div><div class="stop-tag">Day 3 · Sleep here</div></div>
-      <div class="stop-arrow">→</div>
-    </a>
-    <a class="stop-card" href="https://www.google.com/maps/dir/Z%C3%BCrich+HB/Interlaken+Ost/Schynige+Platte/Kandersteg/Spiez/Thun/Bern" target="_blank" rel="noopener">
-      <div class="stop-num" style="background:#8C2F1E">★</div>
-      <div class="stop-info"><div class="stop-name">Open full route</div><div class="stop-tag">All stops in Google Maps</div></div>
-      <div class="stop-arrow">→</div>
-    </a>
-  </div>
+  <div id="gmap"><div class="map-loading">Loading map…</div></div>
 </div>
 
 <div class="sec-label">The Itinerary</div>
@@ -310,6 +298,7 @@
     <div class="day-cost">spend<b>~58 CHF</b><span>+ pass + bed</span></div>
   </div>
   <div class="day-body">
+    <div class="day-main">
     <div class="timeline">
       <div class="tl-time">07:02</div><div class="tl-event"><b>Zürich HB → Interlaken Ost</b> <span class="price">included · STP</span><small>Direct IC train, ~2h. Right side has the lake views. Activate the Swiss Travel Pass today.</small></div>
       <div class="tl-time">09:25</div><div class="tl-event"><b>Drop bag at Interlaken hostel</b><small>Most hostels store bags before check-in. Then hop the next train one stop forward.</small></div>
@@ -324,6 +313,24 @@
       <div><div class="sleep-l">★ Sleep · Interlaken</div><div class="sleep-name"><a href="https://www.villa.ch" target="_blank" rel="noopener">Backpackers Villa Sonnenhof</a> — twin private room, free breakfast</div></div>
       <div class="sleep-price">~80 CHF / night for 2 → <b>40 CHF p.p.</b></div>
     </div>
+    </div>
+    <aside class="day-photos" data-day="1">
+      <a class="day-photo" href="https://www.google.com/maps/search/?api=1&query=46.6469,7.9097" target="_blank" rel="noopener" title="Schynige Platte">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Schynige_Platte.jpg?width=600" alt="Schynige Platte panorama" loading="lazy">
+        <div class="day-photo-num" style="background:#B5462E">4</div>
+        <div class="day-photo-cap">Schynige Platte<small>1,967 m · cogwheel peak</small></div>
+      </a>
+      <a class="day-photo" href="https://www.google.com/maps/search/?api=1&query=46.6614,7.8597" target="_blank" rel="noopener" title="Wilderswil">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Wilderswil.jpg?width=600" alt="Wilderswil and the Lütschine valley" loading="lazy">
+        <div class="day-photo-num" style="background:#B5462E">3</div>
+        <div class="day-photo-cap">Wilderswil<small>Cogwheel base · Lütschine</small></div>
+      </a>
+      <a class="day-photo" href="https://www.google.com/maps/search/?api=1&query=46.6904,7.8691" target="_blank" rel="noopener" title="Interlaken">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Goldswil-Viadukt_Panorama_mit_Interlaken_im_Hintergrund_2.jpg?width=600" alt="Interlaken between two lakes" loading="lazy">
+        <div class="day-photo-num" style="background:#B5462E">2</div>
+        <div class="day-photo-cap">Interlaken<small>Sleep · between two lakes</small></div>
+      </a>
+    </aside>
   </div>
 </article>
 
@@ -365,6 +372,7 @@
     <div class="day-cost">spend<b>~48 CHF</b><span>+ bed</span></div>
   </div>
   <div class="day-body">
+    <div class="day-main">
     <div class="timeline">
       <div class="tl-time">08:30</div><div class="tl-event"><b>Interlaken West → Spiez → Kandersteg</b> <span class="price">included · STP</span><small>~1h with one easy change at Spiez. Castle on a peninsula visible from the platform.</small></div>
       <div class="tl-time">09:35</div><div class="tl-event"><b>Drop bags at Kandersteg hotel</b><small>Most welcome early bag drop. Quick cheese-and-bread breakfast on a bench by the church.</small></div>
@@ -381,6 +389,24 @@
       <div><div class="sleep-l">★ Sleep · Kandersteg</div><div class="sleep-name"><a href="https://www.bernerhof.ch" target="_blank" rel="noopener">Hotel Bernerhof</a> — historic chalet, double room w/ balcony</div></div>
       <div class="sleep-price">~120 CHF / night for 2 → <b>60 CHF p.p.</b></div>
     </div>
+    </div>
+    <aside class="day-photos" data-day="2">
+      <a class="day-photo" href="https://www.google.com/maps/search/?api=1&query=46.4992,7.7261" target="_blank" rel="noopener" title="Oeschinensee">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/20190725_Oeschinensee-Panorama%2C_Kandersteg_%2806540-42_stitch%29.jpg?width=600" alt="Oeschinensee turquoise lake" loading="lazy">
+        <div class="day-photo-num" style="background:#3F5A45">8</div>
+        <div class="day-photo-cap">Oeschinensee<small>1,578 m · the turquoise lake</small></div>
+      </a>
+      <a class="day-photo" href="https://www.google.com/maps/search/?api=1&query=46.4961,7.6755" target="_blank" rel="noopener" title="Kandersteg">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kandersteg_Church.jpg?width=600" alt="Kandersteg village and church" loading="lazy">
+        <div class="day-photo-num" style="background:#3F5A45">7</div>
+        <div class="day-photo-cap">Kandersteg<small>Sleep · alpine village</small></div>
+      </a>
+      <a class="day-photo" href="https://www.google.com/maps/search/?api=1&query=46.6886,7.6797" target="_blank" rel="noopener" title="Spiez">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Spiez.JPG?width=600" alt="Spiez castle on Lake Thun" loading="lazy">
+        <div class="day-photo-num" style="background:#3F5A45">6</div>
+        <div class="day-photo-cap">Spiez<small>Castle on the lake</small></div>
+      </a>
+    </aside>
   </div>
 </article>
 
@@ -455,6 +481,7 @@
     <div class="day-cost">spend<b>~30 CHF</b><span>+ bed</span></div>
   </div>
   <div class="day-body">
+    <div class="day-main">
     <div class="timeline">
       <div class="tl-time">09:30</div><div class="tl-event"><b>Kandersteg → Spiez</b> <span class="price">included · STP</span><small>~30 min. Drop into the Spiez harbor — castle on a peninsula, vineyards on the slope.</small></div>
       <div class="tl-time">10:35</div><div class="tl-event"><b>Boat: Spiez → Thun across Lake Thun</b> <span class="price">included · STP</span><small>~1h45 lake cruise. Top deck, sun, alpine peaks reflected in the water. Free with your pass — use it.</small></div>
@@ -468,6 +495,24 @@
       <div><div class="sleep-l">★ Sleep · Bern</div><div class="sleep-name"><a href="https://www.bernbackpackers.com" target="_blank" rel="noopener">Bern Backpackers Hotel Glocke</a> — twin private room, Old Town location</div></div>
       <div class="sleep-price">~100 CHF / night for 2 → <b>50 CHF p.p.</b></div>
     </div>
+    </div>
+    <aside class="day-photos" data-day="3">
+      <a class="day-photo" href="https://www.google.com/maps/search/?api=1&query=46.9480,7.4474" target="_blank" rel="noopener" title="Bern Old Town">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bern_Panorama_von_Rosengarten_20211007.jpg?width=600" alt="Bern Old Town and the Aare river loop" loading="lazy">
+        <div class="day-photo-num" style="background:#5C7C95">10</div>
+        <div class="day-photo-cap">Bern Old Town<small>Sleep · UNESCO arcades</small></div>
+      </a>
+      <a class="day-photo" href="https://www.google.com/maps/search/?api=1&query=46.9480,7.4477" target="_blank" rel="noopener" title="Zytglogge">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Zytglogge_01.jpg?width=600" alt="Zytglogge clock tower in Bern" loading="lazy">
+        <div class="day-photo-num" style="background:#5C7C95">★</div>
+        <div class="day-photo-cap">Zytglogge<small>1530 clock · top of the hour</small></div>
+      </a>
+      <a class="day-photo" href="https://www.google.com/maps/search/?api=1&query=46.7607,7.6280" target="_blank" rel="noopener" title="Thun">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/1_thun_castle_view_2012.jpg?width=600" alt="Thun castle and the Aare" loading="lazy">
+        <div class="day-photo-num" style="background:#5C7C95">9</div>
+        <div class="day-photo-cap">Thun<small>Lake-boat docks · castle</small></div>
+      </a>
+    </aside>
   </div>
 </article>
 
@@ -525,12 +570,26 @@
     <div class="day-cost">spend<b>~12 CHF</b><span>coffee + bun</span></div>
   </div>
   <div class="day-body">
+    <div class="day-main">
     <div class="timeline">
       <div class="tl-time">10:00</div><div class="tl-event"><b>Coffee + Nussgipfel at Adriano's or Café Einstein</b> <span class="price">10 CHF</span><small>Bern's signature pastry. Both bakeries are walking distance from the station.</small></div>
       <div class="tl-time">11:00</div><div class="tl-event"><b>Climb Bern Münster tower</b> <span class="price">~5 CHF</span><small>344 stone steps, best 360° view of the river-loop Old Town. Skip if rushed.</small></div>
       <div class="tl-time">12:30</div><div class="tl-event"><b>Bern HB → Zürich HB</b> <span class="price">included · STP</span><small>~1h direct. Pass valid until 5am the day after Day 4 — verify your activation dates.</small></div>
       <div class="tl-time">13:30</div><div class="tl-event"><b>Back in Zürich · trip ends</b><small>Sleep at your covered Zürich stay.</small></div>
     </div>
+    </div>
+    <aside class="day-photos" data-day="4">
+      <a class="day-photo" href="https://www.google.com/maps/search/?api=1&query=46.9472,7.4505" target="_blank" rel="noopener" title="Bern Münster">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Muenster_Bern.jpg?width=600" alt="Bern Münster Gothic spire" loading="lazy">
+        <div class="day-photo-num" style="background:#8C2F1E">★</div>
+        <div class="day-photo-cap">Bern Münster<small>344 steps · 360° view</small></div>
+      </a>
+      <a class="day-photo" href="https://www.google.com/maps/search/?api=1&query=46.9489,7.4395" target="_blank" rel="noopener" title="Bern HB">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bern_Panorama_von_Rosengarten_20211007.jpg?width=600" alt="Bern from the Rosengarten" loading="lazy">
+        <div class="day-photo-num" style="background:#8C2F1E">11</div>
+        <div class="day-photo-cap">Bern → Zürich<small>One last look · home</small></div>
+      </a>
+    </aside>
   </div>
 </article>
 
@@ -620,6 +679,234 @@
 </footer>
 
 </div>
+
+<script>
+const STOPS = [
+  { id:1,  day:1, color:'#B5462E', name:'Zürich HB',          lat:47.3782, lng:8.5402, tag:'Day 1 · Departure',
+    desc:'Departure 07:02. Direct IC train to Interlaken Ost — sit on the right for lake views.',
+    staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/Zuerich_Hauptbahnhof-2.jpg?width=600' },
+  { id:2,  day:1, color:'#B5462E', name:'Interlaken Ost',     lat:46.6904, lng:7.8691, tag:'Day 1 · Sleep here',
+    desc:'Drop bags at Backpackers Villa Sonnenhof. Tonight you sleep between two lakes.',
+    staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/Goldswil-Viadukt_Panorama_mit_Interlaken_im_Hintergrund_2.jpg?width=600' },
+  { id:3,  day:1, color:'#B5462E', name:'Wilderswil',         lat:46.6614, lng:7.8597, tag:'Day 1 · Cogwheel base',
+    desc:'Cogwheel base station. Cross the platform straight to Schynige Platte.',
+    staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/Wilderswil.jpg?width=600' },
+  { id:4,  day:1, color:'#B5462E', name:'Schynige Platte',    lat:46.6469, lng:7.9097, tag:'Day 1 · 1,967 m peak',
+    desc:'1893 cogwheel, wooden benches. Eiger, Mönch, Jungfrau panorama from the terrace.',
+    staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/Schynige_Platte.jpg?width=600' },
+  { id:5,  day:1, color:'#B5462E', name:'Gündlischwand',      lat:46.6359, lng:7.9011, tag:'Day 1 · Chalet village',
+    desc:'Quiet chalet village by the aquamarine Lütschine river — 15 minutes is enough.',
+    staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/Wilderswil.jpg?width=600' },
+  { id:6,  day:2, color:'#3F5A45', name:'Spiez',              lat:46.6886, lng:7.6797, tag:'Day 2 · Lakeside change',
+    desc:'Quick change at this lakeside town — castle on a peninsula, vineyards on the slope.',
+    staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/Spiez.JPG?width=600' },
+  { id:7,  day:2, color:'#3F5A45', name:'Kandersteg',         lat:46.4961, lng:7.6755, tag:'Day 2 · Sleep here',
+    desc:'Traditional Swiss chalet village (1,200 residents). Sleep at Hotel Bernerhof.',
+    staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/Kandersteg_Church.jpg?width=600' },
+  { id:8,  day:2, color:'#3F5A45', name:'Oeschinensee',       lat:46.4992, lng:7.7261, tag:'Day 2 · Turquoise lake',
+    desc:'Turquoise alpine lake at 1,578 m under the Blüemlisalp. Gondola + 30-min walk down.',
+    staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/20190725_Oeschinensee-Panorama%2C_Kandersteg_%2806540-42_stitch%29.jpg?width=600' },
+  { id:9,  day:3, color:'#5C7C95', name:'Thun',               lat:46.7607, lng:7.6280, tag:'Day 3 · Boat docks',
+    desc:'The boat docks here after the Lake Thun cruise. Lunch by the Aare under the castle.',
+    staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/1_thun_castle_view_2012.jpg?width=600' },
+  { id:10, day:3, color:'#5C7C95', name:'Bern Old Town',      lat:46.9480, lng:7.4474, tag:'Day 3 · Sleep here',
+    desc:'UNESCO World Heritage. Zytglogge, Münster, Aare river walk, BärenPark — sleep here.',
+    staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/Zytglogge_01.jpg?width=600' },
+  { id:11, day:4, color:'#8C2F1E', name:'Bern HB → Zürich',   lat:46.9489, lng:7.4395, tag:'Day 4 · Slow morning + return',
+    desc:'Coffee, a Münster climb, then 12:30 train back. Pass valid until 5 am the next day.',
+    staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/Muenster_Bern.jpg?width=600' }
+];
+
+const DAY_HERO_STOPS = {
+  1: [4, 5, 2],         // Schynige Platte, Gündlischwand, Interlaken
+  2: [8, 7, 6],         // Oeschinensee, Kandersteg, Spiez
+  3: [10, 9],           // Bern, Thun
+  4: [11]               // Bern HB
+};
+
+// Inline paper-themed map style — no mapId required so this stays active
+const MAP_STYLES = [
+  { elementType: 'geometry', stylers: [{ color: '#F2EBDD' }] },
+  { elementType: 'labels.text.fill', stylers: [{ color: '#43485A' }] },
+  { elementType: 'labels.text.stroke', stylers: [{ color: '#F2EBDD' }] },
+  { featureType: 'poi', elementType: 'labels', stylers: [{ visibility: 'off' }] },
+  { featureType: 'poi', elementType: 'geometry', stylers: [{ color: '#E8DDC4' }] },
+  { featureType: 'poi.park', elementType: 'geometry', stylers: [{ color: '#D6CFA8' }] },
+  { featureType: 'transit', elementType: 'labels', stylers: [{ visibility: 'simplified' }] },
+  { featureType: 'landscape.natural', elementType: 'geometry', stylers: [{ color: '#EAE0CB' }] },
+  { featureType: 'landscape.natural.terrain', elementType: 'geometry', stylers: [{ color: '#DDD0B5' }] },
+  { featureType: 'landscape.man_made', elementType: 'geometry', stylers: [{ color: '#E8DDC4' }] },
+  { featureType: 'administrative', elementType: 'geometry.stroke', stylers: [{ color: '#43485A' }, { weight: 0.6 }] },
+  { featureType: 'administrative.locality', elementType: 'labels.text.fill', stylers: [{ color: '#1B1F2A' }] },
+  { featureType: 'road.highway', elementType: 'geometry', stylers: [{ color: '#C9B98F' }] },
+  { featureType: 'road.arterial', elementType: 'geometry', stylers: [{ color: '#DDD0B5' }] },
+  { featureType: 'road.local', elementType: 'geometry', stylers: [{ color: '#E8DDC4' }] },
+  { featureType: 'road', elementType: 'labels', stylers: [{ visibility: 'simplified' }] },
+  { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#5C7C95' }] },
+  { featureType: 'water', elementType: 'labels.text.fill', stylers: [{ color: '#F2EBDD' }] }
+];
+
+// Build a numbered circular SVG-data-URI pin (works without a mapId)
+function pinIcon(num, color, size){
+  size = size || 36;
+  const c = size / 2;
+  const r = (size - 6) / 2;
+  const fontSize = Math.round(size * 0.4);
+  const svg =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size + '">' +
+      '<ellipse cx="' + c + '" cy="' + (c + r - 1) + '" rx="' + (r * 0.55) + '" ry="2" fill="#1B1F2A" opacity="0.25"/>' +
+      '<circle cx="' + c + '" cy="' + c + '" r="' + r + '" fill="' + color + '" stroke="#1B1F2A" stroke-width="2"/>' +
+      '<circle cx="' + c + '" cy="' + c + '" r="' + (r - 4) + '" fill="' + color + '" stroke="#F2EBDD" stroke-width="0.8" opacity="0.45"/>' +
+      '<text x="' + c + '" y="' + (c + fontSize/3) + '" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-weight="700" font-size="' + fontSize + '" fill="#F2EBDD">' + num + '</text>' +
+    '</svg>';
+  return {
+    url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg),
+    scaledSize: new google.maps.Size(size, size),
+    anchor: new google.maps.Point(c, c)
+  };
+}
+
+(async function bootstrap(){
+  let cfg;
+  try {
+    cfg = await fetch('/api/config').then(r => r.json());
+  } catch (e) {
+    return mapError('Failed to load /api/config — is GOOGLE_MAPS_API set in Vercel?');
+  }
+  if (!cfg || !cfg.apiKey) {
+    return mapError('GOOGLE_MAPS_API env var is empty in Vercel. Set it and redeploy.');
+  }
+
+  // Load Google Maps JS API the simple way — no library imports needed for classic Marker
+  await new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'https://maps.googleapis.com/maps/api/js?key=' + encodeURIComponent(cfg.apiKey) + '&v=weekly';
+    s.async = true;
+    s.defer = true;
+    s.onload = resolve;
+    s.onerror = () => reject(new Error('script load failed'));
+    document.head.appendChild(s);
+  }).catch(() => mapError('Google Maps script failed to load. Check the API key + referer restrictions.'));
+
+  if (!window.google || !google.maps) return;
+  initMap();
+})();
+
+function mapError(msg){
+  const el = document.getElementById('gmap');
+  if (el) el.innerHTML = '<div class="map-loading" style="color:var(--rust-deep)">⚠ ' + msg + '</div>';
+}
+
+function initMap(){
+  const mapEl = document.getElementById('gmap');
+  mapEl.innerHTML = ''; // clear loading state
+
+  const map = new google.maps.Map(mapEl, {
+    center: { lat: 46.78, lng: 7.85 },
+    zoom: 9,
+    styles: MAP_STYLES,
+    backgroundColor: '#F2EBDD',
+    mapTypeControl: false,
+    streetViewControl: false,
+    fullscreenControl: true,
+    gestureHandling: 'greedy',
+    clickableIcons: false
+  });
+
+  let openIW = null;
+
+  // One classic Marker per stop, sequentially numbered, color-coded by day
+  STOPS.forEach((stop, i) => {
+    const num   = i + 1;
+    const color = stop.color;
+    const baseIcon  = pinIcon(num, color, 36);
+    const hoverIcon = pinIcon(num, color, 42);
+
+    const marker = new google.maps.Marker({
+      map,
+      position: { lat: stop.lat, lng: stop.lng },
+      icon: baseIcon,
+      title: stop.name,
+      cursor: 'pointer',
+      optimized: false,
+      zIndex: 100
+    });
+
+    marker.addListener('mouseover', () => marker.setIcon(hoverIcon));
+    marker.addListener('mouseout',  () => marker.setIcon(baseIcon));
+
+    const html =
+      '<div class="gm-info">' +
+        '<div class="gm-day" style="background:' + color + '">Day ' + stop.day + '</div>' +
+        '<h4>' + stop.name + '</h4>' +
+        '<p>' + (stop.desc || stop.tag || '') + '</p>' +
+        '<a class="gm-link" href="https://www.google.com/maps/search/?api=1&query=' + stop.lat + ',' + stop.lng + '" target="_blank" rel="noopener">Open in Google Maps →</a>' +
+      '</div>';
+
+    marker.addListener('click', () => {
+      if (openIW) openIW.close();
+      const iw = new google.maps.InfoWindow({
+        content: html,
+        pixelOffset: new google.maps.Size(0, -6)
+      });
+      iw.open({ map, anchor: marker });
+      openIW = iw;
+    });
+  });
+
+  // Dashed colored polyline per day — visual route hint, no Directions API call
+  const dayGroups = {};
+  STOPS.forEach(s => { (dayGroups[s.day] ||= []).push(s); });
+
+  Object.entries(dayGroups).forEach(([day, stops]) => {
+    if (stops.length < 2) return;
+    new google.maps.Polyline({
+      map,
+      path: stops.map(s => ({ lat: s.lat, lng: s.lng })),
+      geodesic: true,
+      strokeOpacity: 0,
+      icons: [{
+        icon: { path: 'M 0,-1 0,1', strokeOpacity: 1, strokeColor: stops[0].color, strokeWeight: 3, scale: 4 },
+        offset: '0',
+        repeat: '12px'
+      }]
+    });
+  });
+
+  // Auto-fit to all stops on load
+  const bounds = new google.maps.LatLngBounds();
+  STOPS.forEach(s => bounds.extend({ lat: s.lat, lng: s.lng }));
+  map.fitBounds(bounds, { top: 50, right: 50, bottom: 50, left: 50 });
+
+  // Close open InfoWindow when clicking on empty map
+  map.addListener('click', () => { if (openIW) { openIW.close(); openIW = null; } });
+
+  // Render the per-day photo strips from staticPhoto data (no Places API needed)
+  renderDayPhotoStrips();
+}
+
+function renderDayPhotoStrips(){
+  // Photos are pre-populated as curated Wikipedia images in the HTML; only fill empty containers
+  document.querySelectorAll('.day-photos').forEach(container => {
+    if (container.children.length > 0) return;
+    const day = parseInt(container.dataset.day, 10);
+    const ids = (typeof DAY_HERO_STOPS !== 'undefined' && DAY_HERO_STOPS[day])
+      ? DAY_HERO_STOPS[day]
+      : STOPS.filter(s => s.day === day).map(s => s.id);
+    const html = ids.map(id => {
+      const stop = STOPS.find(s => s.id === id);
+      if (!stop || !stop.staticPhoto) return '';
+      return '' +
+        '<a class="day-photo" href="https://www.google.com/maps/search/?api=1&query=' + stop.lat + ',' + stop.lng + '" target="_blank" rel="noopener" title="Open ' + stop.name + ' in Google Maps">' +
+          '<img src="' + stop.staticPhoto + '" alt="' + stop.name + '" loading="lazy">' +
+          '<div class="day-photo-num" style="background:' + stop.color + '">' + stop.id + '</div>' +
+          '<div class="day-photo-cap">' + stop.name + '<small>' + (stop.tag || '') + '</small></div>' +
+        '</a>';
+    }).join('');
+    if (html) container.innerHTML = html;
+  });
+}
+</script>
 
 </body>
 </html>
