@@ -67,43 +67,67 @@
   .map-legend span{display:flex;align-items:center;gap:6px}
   .map-legend .dot{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--rule)}
 
-  #gmap{width:100%;height:520px;background:var(--paper-2);position:relative}
-  @media(max-width:720px){#gmap{height:440px}}
+  .map-shell{display:grid;grid-template-columns:1fr 320px;height:540px}
+  @media(max-width:820px){.map-shell{grid-template-columns:1fr;height:auto}}
+  #gmap{width:100%;height:100%;min-height:360px;background:var(--paper-2);position:relative}
+  @media(max-width:820px){#gmap{height:420px}}
   .map-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);text-align:center;padding:0 24px}
 
-  /* InfoWindow paper aesthetic — overrides Google's default white bubble */
-  .gm-style .gm-style-iw-c{
-    background:var(--paper)!important;
-    border:1.5px solid var(--rule)!important;
-    border-radius:0!important;
-    box-shadow:5px 5px 0 var(--ink)!important;
-    padding:0!important;
-    max-width:280px!important;
+  .map-detail{
+    border-left:1.5px solid var(--rule);background:var(--paper);
+    display:flex;flex-direction:column;min-height:0;
   }
-  .gm-style .gm-style-iw-d{overflow:auto!important;max-height:none!important;background:var(--paper)!important}
-  .gm-style .gm-style-iw-tc::after{background:var(--paper)!important;box-shadow:-1.5px 1.5px 0 var(--ink)!important}
-  .gm-style .gm-style-iw-chr{position:absolute;top:0;right:0;z-index:2}
-  .gm-style .gm-style-iw button.gm-ui-hover-effect{
-    width:28px!important;height:28px!important;
-    background:var(--paper-2)!important;border-left:1px solid var(--rule)!important;border-bottom:1px solid var(--rule)!important;opacity:1!important;
+  @media(max-width:820px){.map-detail{border-left:none;border-top:1.5px solid var(--rule)}}
+  .md-photo{
+    position:relative;aspect-ratio:4/3;background:var(--paper-2);overflow:hidden;
+    border-bottom:1.5px solid var(--rule);flex-shrink:0;
   }
-  .gm-style .gm-style-iw button.gm-ui-hover-effect>span{margin:6px!important;background-color:var(--ink)!important}
+  .md-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .25s ease;filter:saturate(.95) contrast(1.03)}
+  .md-photo .md-pin{
+    position:absolute;top:10px;left:10px;
+    width:34px;height:34px;border-radius:50%;border:1.5px solid var(--rule);
+    display:flex;align-items:center;justify-content:center;
+    font-family:"Fraunces",serif;font-weight:700;color:var(--paper);font-size:14px;
+    box-shadow:2px 2px 0 var(--ink);
+  }
+  .md-photo .md-day{
+    position:absolute;top:14px;right:10px;
+    font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--paper);padding:4px 9px;
+    background:rgba(27,31,42,.78);backdrop-filter:blur(2px);
+  }
+  .md-photo.skel::before{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(90deg,var(--paper-2) 25%,var(--paper-3) 50%,var(--paper-2) 75%);
+    background-size:200% 100%;animation:skel 1.4s infinite;
+  }
+  @keyframes skel{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
-  .gm-info{font-family:"Lora",serif;width:240px;color:var(--ink)}
-  .gm-info .gm-day{
-    display:inline-block;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--paper);padding:4px 10px;margin:14px 14px 8px;
+  .md-body{padding:18px 20px 16px;flex:1;overflow-y:auto;min-height:0}
+  .md-body::-webkit-scrollbar{width:6px}
+  .md-body::-webkit-scrollbar-thumb{background:var(--ink-soft);border-radius:3px}
+  .md-body h4{font-family:"Fraunces",serif;font-size:24px;font-weight:600;line-height:1.08;letter-spacing:-.01em;margin-bottom:6px}
+  .md-tag{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px}
+  .md-desc{font-family:"Lora",serif;font-style:italic;font-size:14.5px;color:var(--ink-soft);line-height:1.5;margin-bottom:14px}
+  .md-meta{font-family:"Lora",serif;font-size:13px;color:var(--ink);padding-top:12px;border-top:1px dashed var(--rule);line-height:1.5}
+  .md-meta-row{display:flex;gap:8px;margin-bottom:6px;align-items:flex-start}
+  .md-meta-row .md-icon{flex-shrink:0;color:var(--rust);font-style:normal;width:14px;text-align:center}
+  .md-meta a{color:var(--rust-deep);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px;word-break:break-word}
+
+  .md-cta{
+    border-top:1.5px solid var(--rule);background:var(--paper-2);
+    padding:0;display:flex;
   }
-  .gm-info h4{font-family:"Fraunces",serif;font-size:19px;font-weight:600;margin:0 14px 6px;line-height:1.15;letter-spacing:-.005em}
-  .gm-info p{margin:0 14px 12px;font-style:italic;font-size:13.5px;color:var(--ink-soft);line-height:1.4}
-  .gm-info .gm-link{
-    display:block;margin:0;padding:10px 14px;
-    border-top:1px dashed var(--rule);background:var(--paper-2);
+  .md-cta a{
+    flex:1;padding:14px 12px;text-align:center;
     font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--rust-deep);text-decoration:none;text-align:center;
+    text-transform:uppercase;color:var(--rust-deep);text-decoration:none;
     transition:background .15s;
   }
-  .gm-info .gm-link:hover{background:var(--paper-3)}
+  .md-cta a + a{border-left:1px dashed var(--rule)}
+  .md-cta a:hover{background:var(--paper-3)}
+
+  .md-empty{padding:50px 20px;text-align:center;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
 
   .day-photos{display:flex;flex-direction:column;gap:14px}
   .day-photo{
@@ -253,7 +277,24 @@
       <span><span class="dot" style="background:#8C2F1E"></span>Day 4</span>
     </div>
   </div>
-  <div id="gmap"><div class="map-loading">Loading map…</div></div>
+  <div class="map-shell">
+    <div id="gmap"><div class="map-loading">Loading map…</div></div>
+    <aside class="map-detail" id="md">
+      <div class="md-photo skel" id="md-photo">
+        <div class="md-pin" id="md-pin"></div>
+        <div class="md-day" id="md-day"></div>
+      </div>
+      <div class="md-body">
+        <h4 id="md-name">Tap a pin</h4>
+        <div class="md-tag" id="md-tag">to see details and photos</div>
+        <p class="md-desc" id="md-desc">Each stop on the route shows a photo, a short note, and a link to open it in Google Maps. The pins are color-coded by day.</p>
+        <div class="md-meta" id="md-meta" style="display:none"></div>
+      </div>
+      <div class="md-cta" id="md-cta" style="display:none">
+        <a id="md-open" href="#" target="_blank" rel="noopener">Open in Google Maps →</a>
+      </div>
+    </aside>
+  </div>
 </div>
 
 <div class="sec-label">The Itinerary</div>
@@ -587,7 +628,12 @@
       <a class="day-photo" href="https://www.google.com/maps/search/?api=1&query=46.9489,7.4395" target="_blank" rel="noopener" title="Bern HB">
         <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bern_Panorama_von_Rosengarten_20211007.jpg?width=600" alt="Bern from the Rosengarten" loading="lazy">
         <div class="day-photo-num" style="background:#8C2F1E">11</div>
-        <div class="day-photo-cap">Bern → Zürich<small>One last look · home</small></div>
+        <div class="day-photo-cap">Bern HB<small>12:30 · IC train back</small></div>
+      </a>
+      <a class="day-photo" href="https://www.google.com/maps/search/?api=1&query=47.3782,8.5402" target="_blank" rel="noopener" title="Zürich HB">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Zuerich_Hauptbahnhof-2.jpg?width=600" alt="Zürich Hauptbahnhof concourse" loading="lazy">
+        <div class="day-photo-num" style="background:#8C2F1E">12</div>
+        <div class="day-photo-cap">Zürich HB · Home<small>~13:30 · trip ends</small></div>
       </a>
     </aside>
   </div>
@@ -684,37 +730,52 @@
 const STOPS = [
   { id:1,  day:1, color:'#B5462E', name:'Zürich HB',          lat:47.3782, lng:8.5402, tag:'Day 1 · Departure',
     desc:'Departure 07:02. Direct IC train to Interlaken Ost — sit on the right for lake views.',
+    query:'Zürich Hauptbahnhof',
     staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/Zuerich_Hauptbahnhof-2.jpg?width=600' },
   { id:2,  day:1, color:'#B5462E', name:'Interlaken Ost',     lat:46.6904, lng:7.8691, tag:'Day 1 · Sleep here',
     desc:'Drop bags at Backpackers Villa Sonnenhof. Tonight you sleep between two lakes.',
+    query:'Interlaken Ost station',
     staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/Goldswil-Viadukt_Panorama_mit_Interlaken_im_Hintergrund_2.jpg?width=600' },
   { id:3,  day:1, color:'#B5462E', name:'Wilderswil',         lat:46.6614, lng:7.8597, tag:'Day 1 · Cogwheel base',
     desc:'Cogwheel base station. Cross the platform straight to Schynige Platte.',
+    query:'Wilderswil station Switzerland',
     staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/Wilderswil.jpg?width=600' },
   { id:4,  day:1, color:'#B5462E', name:'Schynige Platte',    lat:46.6469, lng:7.9097, tag:'Day 1 · 1,967 m peak',
     desc:'1893 cogwheel, wooden benches. Eiger, Mönch, Jungfrau panorama from the terrace.',
+    query:'Schynige Platte',
     staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/Schynige_Platte.jpg?width=600' },
   { id:5,  day:1, color:'#B5462E', name:'Gündlischwand',      lat:46.6359, lng:7.9011, tag:'Day 1 · Chalet village',
     desc:'Quiet chalet village by the aquamarine Lütschine river — 15 minutes is enough.',
+    query:'Gündlischwand',
     staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/Wilderswil.jpg?width=600' },
   { id:6,  day:2, color:'#3F5A45', name:'Spiez',              lat:46.6886, lng:7.6797, tag:'Day 2 · Lakeside change',
     desc:'Quick change at this lakeside town — castle on a peninsula, vineyards on the slope.',
+    query:'Spiez Castle Switzerland',
     staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/Spiez.JPG?width=600' },
   { id:7,  day:2, color:'#3F5A45', name:'Kandersteg',         lat:46.4961, lng:7.6755, tag:'Day 2 · Sleep here',
     desc:'Traditional Swiss chalet village (1,200 residents). Sleep at Hotel Bernerhof.',
+    query:'Kandersteg village',
     staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/Kandersteg_Church.jpg?width=600' },
   { id:8,  day:2, color:'#3F5A45', name:'Oeschinensee',       lat:46.4992, lng:7.7261, tag:'Day 2 · Turquoise lake',
     desc:'Turquoise alpine lake at 1,578 m under the Blüemlisalp. Gondola + 30-min walk down.',
+    query:'Oeschinensee lake',
     staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/20190725_Oeschinensee-Panorama%2C_Kandersteg_%2806540-42_stitch%29.jpg?width=600' },
   { id:9,  day:3, color:'#5C7C95', name:'Thun',               lat:46.7607, lng:7.6280, tag:'Day 3 · Boat docks',
     desc:'The boat docks here after the Lake Thun cruise. Lunch by the Aare under the castle.',
+    query:'Thun Castle Switzerland',
     staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/1_thun_castle_view_2012.jpg?width=600' },
   { id:10, day:3, color:'#5C7C95', name:'Bern Old Town',      lat:46.9480, lng:7.4474, tag:'Day 3 · Sleep here',
     desc:'UNESCO World Heritage. Zytglogge, Münster, Aare river walk, BärenPark — sleep here.',
+    query:'Zytglogge Bern',
     staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/Zytglogge_01.jpg?width=600' },
-  { id:11, day:4, color:'#8C2F1E', name:'Bern HB → Zürich',   lat:46.9489, lng:7.4395, tag:'Day 4 · Slow morning + return',
-    desc:'Coffee, a Münster climb, then 12:30 train back. Pass valid until 5 am the next day.',
-    staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/Muenster_Bern.jpg?width=600' }
+  { id:11, day:4, color:'#8C2F1E', name:'Bern HB',            lat:46.9489, lng:7.4395, tag:'Day 4 · Slow morning + return',
+    desc:'Coffee + Nussgipfel, climb the Münster, then 12:30 IC back to Zürich (~1h direct).',
+    query:'Bern Hauptbahnhof',
+    staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/Muenster_Bern.jpg?width=600' },
+  { id:12, day:4, color:'#8C2F1E', name:'Zürich HB · Home',   lat:47.3782, lng:8.5402, tag:'Day 4 · Trip ends',
+    desc:'Arrive ~13:30. Pass valid until 5 am the day after. Trip ends here.',
+    query:'Zürich Hauptbahnhof',
+    staticPhoto:'https://commons.wikimedia.org/wiki/Special:FilePath/Zuerich_Hauptbahnhof-2.jpg?width=600' }
 ];
 
 const DAY_HERO_STOPS = {
@@ -777,10 +838,10 @@ function pinIcon(num, color, size){
     return mapError('GOOGLE_MAPS_API env var is empty in Vercel. Set it and redeploy.');
   }
 
-  // Load Google Maps JS API the simple way — no library imports needed for classic Marker
+  // Load Google Maps JS API + Places library (Places lookup gives us a real photo per pin)
   await new Promise((resolve, reject) => {
     const s = document.createElement('script');
-    s.src = 'https://maps.googleapis.com/maps/api/js?key=' + encodeURIComponent(cfg.apiKey) + '&v=weekly';
+    s.src = 'https://maps.googleapis.com/maps/api/js?key=' + encodeURIComponent(cfg.apiKey) + '&v=weekly&libraries=places';
     s.async = true;
     s.defer = true;
     s.onload = resolve;
@@ -796,6 +857,12 @@ function mapError(msg){
   const el = document.getElementById('gmap');
   if (el) el.innerHTML = '<div class="map-loading" style="color:var(--rust-deep)">⚠ ' + msg + '</div>';
 }
+
+// Cache for Place data per stop id: { photoUrl, address, googleMapsURI }
+const placeCache = new Map();
+let activeStopId = null;
+let activeMarker = null;
+const markersById = new Map();
 
 function initMap(){
   const mapEl = document.getElementById('gmap');
@@ -813,14 +880,13 @@ function initMap(){
     clickableIcons: false
   });
 
-  let openIW = null;
-
-  // One classic Marker per stop, sequentially numbered, color-coded by day
+  // Markers — classic, numbered, hover-swap to bigger
   STOPS.forEach((stop, i) => {
     const num   = i + 1;
     const color = stop.color;
     const baseIcon  = pinIcon(num, color, 36);
     const hoverIcon = pinIcon(num, color, 42);
+    const activeIcon = pinIcon(num, color, 46);
 
     const marker = new google.maps.Marker({
       map,
@@ -831,33 +897,23 @@ function initMap(){
       optimized: false,
       zIndex: 100
     });
+    marker._baseIcon = baseIcon;
+    marker._hoverIcon = hoverIcon;
+    marker._activeIcon = activeIcon;
+    markersById.set(stop.id, marker);
 
-    marker.addListener('mouseover', () => marker.setIcon(hoverIcon));
-    marker.addListener('mouseout',  () => marker.setIcon(baseIcon));
-
-    const html =
-      '<div class="gm-info">' +
-        '<div class="gm-day" style="background:' + color + '">Day ' + stop.day + '</div>' +
-        '<h4>' + stop.name + '</h4>' +
-        '<p>' + (stop.desc || stop.tag || '') + '</p>' +
-        '<a class="gm-link" href="https://www.google.com/maps/search/?api=1&query=' + stop.lat + ',' + stop.lng + '" target="_blank" rel="noopener">Open in Google Maps →</a>' +
-      '</div>';
-
-    marker.addListener('click', () => {
-      if (openIW) openIW.close();
-      const iw = new google.maps.InfoWindow({
-        content: html,
-        pixelOffset: new google.maps.Size(0, -6)
-      });
-      iw.open({ map, anchor: marker });
-      openIW = iw;
+    marker.addListener('mouseover', () => {
+      if (activeStopId !== stop.id) marker.setIcon(hoverIcon);
     });
+    marker.addListener('mouseout',  () => {
+      if (activeStopId !== stop.id) marker.setIcon(baseIcon);
+    });
+    marker.addListener('click', () => focusStop(stop, map));
   });
 
-  // Dashed colored polyline per day — visual route hint, no Directions API call
+  // Dashed colored polyline per day — visual route hint
   const dayGroups = {};
   STOPS.forEach(s => { (dayGroups[s.day] ||= []).push(s); });
-
   Object.entries(dayGroups).forEach(([day, stops]) => {
     if (stops.length < 2) return;
     new google.maps.Polyline({
@@ -873,16 +929,133 @@ function initMap(){
     });
   });
 
-  // Auto-fit to all stops on load
+  // Auto-fit to all stops
   const bounds = new google.maps.LatLngBounds();
   STOPS.forEach(s => bounds.extend({ lat: s.lat, lng: s.lng }));
   map.fitBounds(bounds, { top: 50, right: 50, bottom: 50, left: 50 });
 
-  // Close open InfoWindow when clicking on empty map
-  map.addListener('click', () => { if (openIW) { openIW.close(); openIW = null; } });
+  // Pre-populate the right panel with the first stop on load
+  focusStop(STOPS[0], map, /*pan*/ false);
 
-  // Render the per-day photo strips from staticPhoto data (no Places API needed)
+  // Per-day photo strip on each day card (uses staticPhoto data, no Places call)
   renderDayPhotoStrips();
+}
+
+function focusStop(stop, map, pan){
+  activeStopId = stop.id;
+
+  // Pin visuals: reset all, highlight the active one
+  markersById.forEach((m, id) => {
+    m.setIcon(id === stop.id ? m._activeIcon : m._baseIcon);
+    m.setZIndex(id === stop.id ? 500 : 100);
+  });
+
+  // Pan the map to it (skip on initial load to keep the route framed)
+  if (pan !== false && map) {
+    map.panTo({ lat: stop.lat, lng: stop.lng });
+    if (map.getZoom() < 11) map.setZoom(11);
+  }
+
+  // Update the right detail panel
+  renderDetail(stop);
+
+  // Lazy-load the Google Place photo for this stop (cached after first hit)
+  fetchPlacePhoto(stop).then(data => {
+    if (!data) return;
+    placeCache.set(stop.id, data);
+    if (activeStopId === stop.id) renderDetail(stop);
+  });
+}
+
+function renderDetail(stop){
+  const photoEl = document.getElementById('md-photo');
+  const pinEl   = document.getElementById('md-pin');
+  const dayEl   = document.getElementById('md-day');
+  const nameEl  = document.getElementById('md-name');
+  const tagEl   = document.getElementById('md-tag');
+  const descEl  = document.getElementById('md-desc');
+  const metaEl  = document.getElementById('md-meta');
+  const ctaEl   = document.getElementById('md-cta');
+  const openEl  = document.getElementById('md-open');
+
+  // Pin badge + day label
+  pinEl.style.background = stop.color;
+  pinEl.textContent = stop.id;
+  dayEl.textContent = 'Day ' + stop.day;
+
+  nameEl.textContent = stop.name;
+  tagEl.textContent  = stop.tag || '';
+  descEl.textContent = stop.desc || '';
+
+  // Photo: use cached Place photo if available, else staticPhoto, else skeleton
+  const cached = placeCache.get(stop.id);
+  const photoUrl = (cached && cached.photoUrl) || stop.staticPhoto;
+
+  // wipe existing img if any
+  const oldImg = photoEl.querySelector('img');
+  if (oldImg) oldImg.remove();
+
+  if (photoUrl) {
+    const img = document.createElement('img');
+    img.alt = stop.name;
+    img.loading = 'lazy';
+    img.style.opacity = '0';
+    img.onload = () => { img.style.opacity = '1'; photoEl.classList.remove('skel'); };
+    img.onerror = () => photoEl.classList.add('skel');
+    img.src = photoUrl;
+    photoEl.insertBefore(img, photoEl.firstChild);
+  } else {
+    photoEl.classList.add('skel');
+  }
+
+  // Address (only shown once Place lookup returns)
+  if (cached && cached.address) {
+    metaEl.style.display = '';
+    metaEl.innerHTML =
+      '<div class="md-meta-row"><span class="md-icon">◆</span><span>' + escapeHtml(cached.address) + '</span></div>';
+  } else {
+    metaEl.style.display = 'none';
+    metaEl.innerHTML = '';
+  }
+
+  // CTA — use Places-provided googleMapsURI if we have it (deep links to the place page)
+  ctaEl.style.display = '';
+  openEl.href = (cached && cached.googleMapsURI)
+    ? cached.googleMapsURI
+    : 'https://www.google.com/maps/search/?api=1&query=' + stop.lat + ',' + stop.lng;
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+async function fetchPlacePhoto(stop){
+  if (placeCache.has(stop.id)) return placeCache.get(stop.id);
+  if (!window.google || !google.maps || !google.maps.importLibrary) return null;
+  try {
+    const { Place } = await google.maps.importLibrary('places');
+    const { places } = await Place.searchByText({
+      textQuery: stop.query || stop.name,
+      fields: ['displayName', 'photos', 'formattedAddress', 'googleMapsURI', 'location'],
+      maxResultCount: 1,
+      locationBias: { lat: stop.lat, lng: stop.lng },
+      language: 'en',
+      region: 'CH'
+    });
+    const place = places && places[0];
+    if (!place) return null;
+    const photoUrl = (place.photos && place.photos.length)
+      ? place.photos[0].getURI({ maxWidth: 800, maxHeight: 600 })
+      : null;
+    return {
+      photoUrl,
+      address: place.formattedAddress || null,
+      googleMapsURI: place.googleMapsURI || null
+    };
+  } catch (e) {
+    console.warn('Places lookup failed for', stop.name, e);
+    return null;
+  }
 }
 
 function renderDayPhotoStrips(){
