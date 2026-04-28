@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Switzerland · Anna & Boio · 4 Days</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2EBDD;
+    --paper-2:#EAE0CB;
+    --paper-3:#DDD0B5;
+    --ink:#1B1F2A;
+    --ink-soft:#43485A;
+    --moss:#3F5A45;
+    --moss-deep:#2A3F31;
+    --rust:#B5462E;
+    --rust-deep:#8C2F1E;
+    --sky:#5C7C95;
+    --turquoise:#4A8C8E;
+    --rule:#1B1F2A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);font-family:"Lora",Georgia,serif;line-height:1.55;font-size:17px}
+  body{
+    background-image:
+      radial-gradient(1100px 600px at 85% -10%, rgba(92,124,149,.10), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, rgba(63,90,69,.10), transparent 60%);
+    background-attachment:fixed;
+    padding:48px 24px 80px;
+  }
+  .grain::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .35 0'/></filter><rect width='180' height='180' filter='url(%23n)'/></svg>");
+    opacity:.18;mix-blend-mode:multiply;
+  }
+  .page{max-width:980px;margin:0 auto;position:relative;z-index:2}
+
+  .hero{border:1.5px solid var(--rule);padding:36px 40px 0;background:var(--paper);position:relative;box-shadow:6px 6px 0 var(--ink);overflow:hidden}
+  .hero-top{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--rule);padding-bottom:14px;margin-bottom:22px;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+  .hero-top span+span{text-align:right}
+  h1{font-family:"Fraunces",serif;font-weight:700;font-size:clamp(48px,8vw,92px);line-height:.92;letter-spacing:-.02em;font-variation-settings:"opsz" 144,"SOFT" 50}
+  h1 em{font-style:italic;color:var(--rust);font-weight:500;font-variation-settings:"opsz" 144,"SOFT" 100}
+  .sub{font-family:"Fraunces",serif;font-style:italic;font-size:22px;color:var(--ink-soft);margin-top:14px;margin-bottom:8px;max-width:60ch}
+  .for-line{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--moss-deep);margin-top:14px}
+  .mountains{display:block;width:calc(100% + 80px);margin:24px -40px 0}
+
+  .glance{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:28px;border:1.5px solid var(--rule);background:var(--paper-2)}
+  .glance>div{padding:18px 18px;border-right:1px solid var(--rule)}
+  .glance>div:last-child{border-right:none}
+  .glance .lab{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
+  .glance .val{font-family:"Fraunces",serif;font-size:24px;line-height:1.05;font-weight:600}
+  .glance .val small{font-family:"Lora",serif;font-weight:400;font-style:italic;color:var(--ink-soft);font-size:13px;display:block;margin-top:4px}
+  @media(max-width:720px){.glance{grid-template-columns:repeat(2,1fr)}.glance>div{border-bottom:1px solid var(--rule)}.glance>div:nth-child(2){border-right:none}}
+
+  .sec-label{display:flex;align-items:center;gap:14px;margin:64px 0 24px;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--moss-deep)}
+  .sec-label::before,.sec-label::after{content:"";flex:1;height:1px;background:var(--ink)}
+  .sec-label::before{flex:0 0 16px}
+
+  .map-wrap{border:1.5px solid var(--rule);box-shadow:6px 6px 0 var(--ink);background:var(--paper);overflow:hidden}
+  .map-head{padding:16px 22px;border-bottom:1.5px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;background:var(--paper-2)}
+  .map-head h3{font-family:"Fraunces",serif;font-size:22px;font-weight:600}
+  .map-head h3 small{display:block;font-family:"Lora",serif;font-style:italic;font-size:13px;color:var(--ink-soft);font-weight:400;margin-top:2px}
+  .map-legend{display:flex;gap:14px;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;flex-wrap:wrap}
+  .map-legend span{display:flex;align-items:center;gap:6px}
+  .map-legend .dot{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--rule)}
+  .gmap-frame{display:block;width:100%;height:520px;border:0;background:var(--paper-2)}
+  .map-stops{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0;border-top:1.5px solid var(--rule)}
+  .stop-card{
+    display:flex;align-items:center;gap:12px;padding:14px 16px;
+    border-right:1px dashed var(--rule);border-bottom:1px dashed var(--rule);
+    text-decoration:none;color:inherit;background:var(--paper);
+    transition:background .15s ease;
+  }
+  .stop-card:hover{background:var(--paper-2)}
+  .stop-card .stop-num{
+    width:30px;height:30px;border-radius:50%;border:1.5px solid var(--rule);
+    display:flex;align-items:center;justify-content:center;
+    font-family:"Fraunces",serif;font-weight:700;color:var(--paper);font-size:13px;
+    box-shadow:2px 2px 0 var(--ink);flex-shrink:0;
+  }
+  .stop-card .stop-info{min-width:0;flex:1}
+  .stop-card .stop-name{font-family:"Fraunces",serif;font-size:15px;font-weight:600;line-height:1.15;color:var(--ink)}
+  .stop-card .stop-tag{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-top:3px}
+  .stop-card .stop-arrow{font-family:"Fraunces",serif;color:var(--rust);font-size:18px;flex-shrink:0;opacity:.5;transition:opacity .15s, transform .15s}
+  .stop-card:hover .stop-arrow{opacity:1;transform:translateX(3px)}
+
+  .day{border:1.5px solid var(--rule);margin-bottom:28px;background:var(--paper);box-shadow:5px 5px 0 var(--ink);overflow:hidden}
+  .day-illustration{width:100%;height:200px;display:block;border-bottom:1.5px solid var(--rule)}
+  .day-head{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:22px;padding:22px 28px;border-bottom:1.5px solid var(--rule);background:linear-gradient(90deg,var(--paper-2) 0%, var(--paper) 100%)}
+  .day-num{font-family:"Fraunces",serif;font-weight:900;font-size:80px;line-height:.85;color:var(--rust);font-variation-settings:"opsz" 144,"SOFT" 30}
+  .day-num small{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;color:var(--ink-soft);font-weight:400;display:block;margin-bottom:4px}
+  .day-title{font-family:"Fraunces",serif;font-size:30px;font-weight:600;line-height:1.05;letter-spacing:-.01em}
+  .day-route{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;color:var(--ink-soft);margin-top:8px;text-transform:uppercase}
+  .day-cost{font-family:"Fraunces",serif;font-style:italic;text-align:right;font-size:14px;color:var(--ink-soft)}
+  .day-cost b{display:block;font-style:normal;font-size:28px;font-weight:600;color:var(--ink)}
+
+  .day-body{padding:24px 28px 26px}
+  .timeline{display:grid;grid-template-columns:90px 1fr;gap:0;margin-bottom:18px}
+  .tl-time{font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--moss-deep);font-weight:500;border-right:1.5px solid var(--rule);padding:10px 14px 10px 0;text-align:right;position:relative}
+  .tl-time::after{content:"";position:absolute;right:-5px;top:14px;width:9px;height:9px;background:var(--rust);border:1.5px solid var(--rule);border-radius:50%}
+  .tl-event{padding:10px 0 10px 18px;border-left:1.5px solid var(--rule);margin-left:-1px;font-size:15.5px}
+  .tl-event b{font-family:"Fraunces",serif;font-weight:600;font-size:17px;color:var(--ink)}
+  .tl-event .price{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--rust-deep);font-weight:500;margin-left:6px;background:rgba(181,70,46,.08);padding:1px 6px;border-radius:2px;white-space:nowrap;display:inline-block}
+  .tl-event small{display:block;color:var(--ink-soft);font-size:13.5px;margin-top:3px;font-style:italic}
+
+  .sleep{margin-top:18px;padding:14px 18px;background:var(--paper-2);border:1px dashed var(--rule);display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+  .sleep-l{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--moss-deep)}
+  .sleep-name{font-family:"Fraunces",serif;font-style:italic;font-size:18px}
+  .sleep-name a{color:var(--rust-deep);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+  .sleep-price{font-family:"JetBrains Mono",monospace;font-weight:500;color:var(--ink)}
+
+  .budget{border:1.5px solid var(--rule);background:var(--paper);box-shadow:5px 5px 0 var(--ink)}
+  .budget table{width:100%;border-collapse:collapse}
+  .budget thead th{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--paper);background:var(--ink);text-align:left;padding:14px 18px;font-weight:500}
+  .budget thead th:nth-child(2),.budget thead th:nth-child(3){text-align:right}
+  .budget td{padding:13px 18px;border-bottom:1px dotted rgba(27,31,42,.3);vertical-align:top}
+  .budget td:nth-child(2),.budget td:nth-child(3){text-align:right;font-family:"JetBrains Mono",monospace;font-size:14px}
+  .budget td:nth-child(1){font-family:"Lora",serif;font-size:15px}
+  .budget td small{display:block;color:var(--ink-soft);font-size:12px;font-style:italic;margin-top:2px}
+  .budget tr.subtotal td{background:var(--paper-2);font-weight:600;border-bottom:1.5px solid var(--rule)}
+  .budget tr.total td{background:var(--moss-deep);color:var(--paper);font-weight:700;font-size:17px;font-family:"Fraunces",serif;letter-spacing:.01em;border:none}
+  .budget tr.total td:nth-child(2),.budget tr.total td:nth-child(3){font-family:"JetBrains Mono",monospace;font-size:18px}
+  .budget tr.total td small{color:rgba(242,235,221,.7);font-weight:400}
+
+  .buy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:8px}
+  .buy{border:1.5px solid var(--rule);padding:18px 20px;background:var(--paper);transition:transform .15s ease, box-shadow .15s ease;text-decoration:none;color:inherit;display:block}
+  .buy:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--rust)}
+  .buy .tag{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust-deep)}
+  .buy h3{font-family:"Fraunces",serif;font-size:22px;font-weight:600;margin-top:6px;line-height:1.15}
+  .buy p{font-size:14px;color:var(--ink-soft);margin-top:6px;font-style:italic}
+  .buy .url{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--moss-deep);margin-top:10px;word-break:break-all}
+
+  .tips{border:1.5px solid var(--rule);padding:26px 30px;background:var(--paper-2);columns:2;column-gap:36px;column-rule:1px dashed var(--ink-soft)}
+  .tips h4{font-family:"Fraunces",serif;font-size:18px;font-weight:600;margin-bottom:6px;color:var(--moss-deep);break-after:avoid}
+  .tips p{font-size:14.5px;margin-bottom:18px;break-inside:avoid}
+  @media(max-width:720px){.tips{columns:1}}
+
+  footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--ink);font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-soft);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  .warn{margin-top:14px;padding:12px 16px;border-left:3px solid var(--rust);background:rgba(181,70,46,.06);font-size:14px;font-style:italic;color:var(--rust-deep)}
+</style>
+</head>
+<body class="grain">
+<div class="page">
+
+<header class="hero">
+  <div class="hero-top">
+    <span>Itinerary № 001 · Spring/Summer 2026</span>
+    <span>4 Days · 3 Nights · 1 Pass</span>
+  </div>
+  <h1>Switzerland<br><em>by cogwheel</em></h1>
+  <p class="sub">A four-day route from Zürich into the Bernese Oberland and back through the medieval capital — built around old trains, turquoise lakes, and quiet villages.</p>
+  <div class="for-line">★ Drafted for Anna &amp; Boio</div>
+  <svg class="mountains" viewBox="0 0 1000 180" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0%" stop-color="#EAE0CB"/>
+        <stop offset="100%" stop-color="#F2EBDD"/>
+      </linearGradient>
+    </defs>
+    <rect width="1000" height="180" fill="url(#sky)"/>
+    <path d="M0,180 L0,90 L60,55 L130,80 L200,40 L280,70 L350,35 L430,75 L510,30 L600,68 L680,40 L760,72 L840,45 L920,68 L1000,50 L1000,180 Z" fill="#5C7C95" opacity=".55"/>
+    <path d="M0,180 L0,115 L80,90 L160,110 L240,75 L330,105 L420,80 L510,108 L600,75 L690,108 L780,85 L860,108 L940,90 L1000,108 L1000,180 Z" fill="#3F5A45" opacity=".75"/>
+    <path d="M195,42 L210,35 L225,45 L215,50 Z" fill="#F2EBDD" opacity=".9"/>
+    <path d="M345,38 L360,30 L378,42 L362,48 Z" fill="#F2EBDD" opacity=".9"/>
+    <path d="M505,32 L522,25 L540,40 L520,45 Z" fill="#F2EBDD" opacity=".9"/>
+    <path d="M0,180 L0,140 L100,128 L200,140 L300,125 L400,142 L500,128 L600,142 L700,128 L800,140 L900,128 L1000,140 L1000,180 Z" fill="#2A3F31"/>
+    <g fill="#1B1F2A">
+      <rect x="155" y="135" width="10" height="7"/><polygon points="153,135 167,135 160,130"/>
+      <rect x="335" y="132" width="10" height="7"/><polygon points="333,132 347,132 340,127"/>
+      <rect x="555" y="135" width="10" height="7"/><polygon points="553,135 567,135 560,130"/>
+      <rect x="755" y="133" width="10" height="7"/><polygon points="753,133 767,133 760,128"/>
+    </g>
+    <g fill="#2A3F31">
+      <polygon points="80,142 86,128 92,142"/>
+      <polygon points="240,141 246,127 252,141"/>
+      <polygon points="450,141 456,128 462,141"/>
+      <polygon points="650,142 656,128 662,142"/>
+      <polygon points="870,141 876,127 882,141"/>
+    </g>
+  </svg>
+</header>
+
+<div class="glance">
+  <div><div class="lab">Total · per person</div><div class="val">€660<small>≈ 617 CHF · cuts to ~525</small></div></div>
+  <div><div class="lab">Transport</div><div class="val">Swiss Travel Pass<small>4-day Youth · 2nd class</small></div></div>
+  <div><div class="lab">Sleep</div><div class="val">3 nights<small>Interlaken · Kandersteg · Bern</small></div></div>
+  <div><div class="lab">Travelers</div><div class="val">Anna &amp; Boio<small>×2 in Excel for couple total</small></div></div>
+</div>
+
+<div class="warn">⚠ This itinerary assumes summer season. Schynige Platte cogwheel runs <b>13 June – 25 October 2026</b>. Oeschinensee gondola opens <b>9 May 2026</b>. Outside those windows the plan needs adjustments.</div>
+
+<div class="sec-label">The Route · Interactive Map</div>
+<div class="map-wrap">
+  <div class="map-head">
+    <h3>The Bernese Oberland route<small>tap any stop below to open it in Google Maps</small></h3>
+    <div class="map-legend">
+      <span><span class="dot" style="background:#B5462E"></span>Day 1</span>
+      <span><span class="dot" style="background:#3F5A45"></span>Day 2</span>
+      <span><span class="dot" style="background:#5C7C95"></span>Day 3</span>
+      <span><span class="dot" style="background:#8C2F1E"></span>Day 4</span>
+    </div>
+  </div>
+  <iframe
+    class="gmap-frame"
+    src="https://maps.google.com/maps?saddr=Z%C3%BCrich+HB&daddr=Interlaken+Ost+to:Wilderswil+to:Schynige+Platte+to:Kandersteg+to:Spiez+to:Thun+to:Bern&t=&z=9&ie=UTF8&iwloc=&output=embed"
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    allowfullscreen></iframe>
+  <div class="map-stops">
+    <a class="stop-card" href="https://www.google.com/maps/search/?api=1&query=47.3782,8.5402" target="_blank" rel="noopener">
+      <div class="stop-num" style="background:#B5462E">1</div>
+      <div class="stop-info"><div class="stop-name">Zürich HB</div><div class="stop-tag">Day 1 · Departure</div></div>
+      <div class="stop-arrow">→</div>
+    </a>
+    <a class="stop-card" href="https://www.google.com/maps/search/?api=1&query=46.6904,7.8691" target="_blank" rel="noopener">
+      <div class="stop-num" style="background:#B5462E">2</div>
+      <div class="stop-info"><div class="stop-name">Interlaken Ost</div><div class="stop-tag">Day 1 · Sleep here</div></div>
+      <div class="stop-arrow">→</div>
+    </a>
+    <a class="stop-card" href="https://www.google.com/maps/search/?api=1&query=46.6614,7.8597" target="_blank" rel="noopener">
+      <div class="stop-num" style="background:#B5462E">3</div>
+      <div class="stop-info"><div class="stop-name">Wilderswil</div><div class="stop-tag">Day 1 · Cogwheel base</div></div>
+      <div class="stop-arrow">→</div>
+    </a>
+    <a class="stop-card" href="https://www.google.com/maps/search/?api=1&query=46.6469,7.9097" target="_blank" rel="noopener">
+      <div class="stop-num" style="background:#B5462E">4</div>
+      <div class="stop-info"><div class="stop-name">Schynige Platte</div><div class="stop-tag">Day 1 · 1,967m peak</div></div>
+      <div class="stop-arrow">→</div>
+    </a>
+    <a class="stop-card" href="https://www.google.com/maps/search/?api=1&query=46.6359,7.9011" target="_blank" rel="noopener">
+      <div class="stop-num" style="background:#B5462E">5</div>
+      <div class="stop-info"><div class="stop-name">Gündlischwand</div><div class="stop-tag">Day 1 · Chalet village</div></div>
+      <div class="stop-arrow">→</div>
+    </a>
+    <a class="stop-card" href="https://www.google.com/maps/search/?api=1&query=46.6886,7.6797" target="_blank" rel="noopener">
+      <div class="stop-num" style="background:#3F5A45">6</div>
+      <div class="stop-info"><div class="stop-name">Spiez</div><div class="stop-tag">Day 2 · Lakeside change</div></div>
+      <div class="stop-arrow">→</div>
+    </a>
+    <a class="stop-card" href="https://www.google.com/maps/search/?api=1&query=46.4961,7.6755" target="_blank" rel="noopener">
+      <div class="stop-num" style="background:#3F5A45">7</div>
+      <div class="stop-info"><div class="stop-name">Kandersteg</div><div class="stop-tag">Day 2 · Sleep here</div></div>
+      <div class="stop-arrow">→</div>
+    </a>
+    <a class="stop-card" href="https://www.google.com/maps/search/?api=1&query=46.4992,7.7261" target="_blank" rel="noopener">
+      <div class="stop-num" style="background:#3F5A45">8</div>
+      <div class="stop-info"><div class="stop-name">Oeschinensee</div><div class="stop-tag">Day 2 · Turquoise lake</div></div>
+      <div class="stop-arrow">→</div>
+    </a>
+    <a class="stop-card" href="https://www.google.com/maps/search/?api=1&query=46.7607,7.6280" target="_blank" rel="noopener">
+      <div class="stop-num" style="background:#5C7C95">9</div>
+      <div class="stop-info"><div class="stop-name">Thun</div><div class="stop-tag">Day 3 · Boat docks</div></div>
+      <div class="stop-arrow">→</div>
+    </a>
+    <a class="stop-card" href="https://www.google.com/maps/search/?api=1&query=46.9480,7.4474" target="_blank" rel="noopener">
+      <div class="stop-num" style="background:#5C7C95">10</div>
+      <div class="stop-info"><div class="stop-name">Bern Old Town</div><div class="stop-tag">Day 3 · Sleep here</div></div>
+      <div class="stop-arrow">→</div>
+    </a>
+    <a class="stop-card" href="https://www.google.com/maps/dir/Z%C3%BCrich+HB/Interlaken+Ost/Schynige+Platte/Kandersteg/Spiez/Thun/Bern" target="_blank" rel="noopener">
+      <div class="stop-num" style="background:#8C2F1E">★</div>
+      <div class="stop-info"><div class="stop-name">Open full route</div><div class="stop-tag">All stops in Google Maps</div></div>
+      <div class="stop-arrow">→</div>
+    </a>
+  </div>
+</div>
+
+<div class="sec-label">The Itinerary</div>
+
+<article class="day">
+  <svg class="day-illustration" viewBox="0 0 800 200" preserveAspectRatio="xMidYMid slice">
+    <defs><linearGradient id="sky1" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#C9D6E0"/><stop offset="100%" stop-color="#EAE0CB"/></linearGradient></defs>
+    <rect width="800" height="200" fill="url(#sky1)"/>
+    <polygon points="80,140 200,30 320,140" fill="#5C7C95" opacity=".7"/>
+    <polygon points="200,30 240,55 280,30 220,140" fill="#F2EBDD" opacity=".95"/>
+    <polygon points="260,140 380,40 500,140" fill="#5C7C95" opacity=".75"/>
+    <polygon points="380,40 415,65 450,40 390,140" fill="#F2EBDD" opacity=".95"/>
+    <polygon points="440,140 560,55 680,140" fill="#5C7C95" opacity=".7"/>
+    <polygon points="560,55 590,80 620,55 570,140" fill="#F2EBDD" opacity=".9"/>
+    <path d="M0,200 L0,150 Q200,135 400,148 T800,150 L800,200 Z" fill="#3F5A45"/>
+    <path d="M0,200 L0,165 Q150,158 300,168 T800,165 L800,200 Z" fill="#2A3F31"/>
+    <g transform="translate(380,158)">
+      <rect x="0" y="0" width="80" height="22" rx="2" fill="#B5462E" stroke="#1B1F2A" stroke-width="1.5"/>
+      <rect x="6" y="4" width="14" height="10" fill="#F2EBDD" stroke="#1B1F2A" stroke-width="1"/>
+      <rect x="26" y="4" width="14" height="10" fill="#F2EBDD" stroke="#1B1F2A" stroke-width="1"/>
+      <rect x="46" y="4" width="14" height="10" fill="#F2EBDD" stroke="#1B1F2A" stroke-width="1"/>
+      <circle cx="14" cy="24" r="4" fill="#1B1F2A"/>
+      <circle cx="40" cy="24" r="4" fill="#1B1F2A"/>
+      <circle cx="66" cy="24" r="4" fill="#1B1F2A"/>
+    </g>
+    <path d="M0,185 Q400,180 800,185" stroke="#1B1F2A" stroke-width="1.5" fill="none" opacity=".5"/>
+    <polygon points="60,170 70,150 80,170" fill="#2A3F31"/>
+    <polygon points="140,168 152,148 164,168" fill="#2A3F31"/>
+    <polygon points="640,170 651,150 662,170" fill="#2A3F31"/>
+    <polygon points="720,168 732,146 744,168" fill="#2A3F31"/>
+    <circle cx="50" cy="180" r="2" fill="#B5462E"/>
+    <circle cx="220" cy="178" r="2" fill="#F2EBDD"/>
+    <circle cx="540" cy="180" r="2" fill="#B5462E"/>
+    <circle cx="700" cy="178" r="2" fill="#F2EBDD"/>
+  </svg>
+  <div class="day-head">
+    <div class="day-num"><small>Day · 01</small>I</div>
+    <div>
+      <div class="day-title">A vintage cogwheel into the Eiger panorama</div>
+      <div class="day-route">Zürich HB → Interlaken Ost → Schynige Platte → Gündlischwand → Interlaken</div>
+    </div>
+    <div class="day-cost">spend<b>~58 CHF</b><span>+ pass + bed</span></div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-time">07:02</div><div class="tl-event"><b>Zürich HB → Interlaken Ost</b> <span class="price">included · STP</span><small>Direct IC train, ~2h. Right side has the lake views. Activate the Swiss Travel Pass today.</small></div>
+      <div class="tl-time">09:25</div><div class="tl-event"><b>Drop bag at Interlaken hostel</b><small>Most hostels store bags before check-in. Then hop the next train one stop forward.</small></div>
+      <div class="tl-time">10:05</div><div class="tl-event"><b>Interlaken Ost → Wilderswil</b> <span class="price">included · STP</span><small>4 minutes. Cross the platform straight to the cogwheel.</small></div>
+      <div class="tl-time">10:25</div><div class="tl-event"><b>Schynige Platte cogwheel</b> <span class="price">34 CHF · 50% off</span><small>1893 cogwheel railway, wooden benches, 50-min climb to 1,967m. Sit on the right side for the Jungfrau view.</small></div>
+      <div class="tl-time">11:15</div><div class="tl-event"><b>Top: Eiger · Mönch · Jungfrau panorama</b><small>Walk the easy 50-min "Panorama Flower Trail" loop. Botanical Alpine Garden (700+ plant species) included with your ticket. Daily alphorn at the Berghotel.</small></div>
+      <div class="tl-time">13:00</div><div class="tl-event"><b>Lunch on the panorama terrace</b> <span class="price">25 CHF</span><small>Berghotel Schynige Platte. Or pack a Coop sandwich (~6 CHF) and eat with the better view.</small></div>
+      <div class="tl-time">15:00</div><div class="tl-event"><b>Cogwheel down → Wilderswil → Gündlischwand</b> <span class="price">included · STP</span><small>Two stops down the BOB line. Lütschine river runs aquamarine here. Walk the village (15-20 min — it's tiny), photograph the chalets, breathe.</small></div>
+      <div class="tl-time">17:30</div><div class="tl-event"><b>Back to Interlaken Ost · Coop run</b><small>Hit the Coop at the station for tomorrow's picnic + tonight's pasta. Migros is bigger but closes at 19:00.</small></div>
+    </div>
+    <div class="sleep">
+      <div><div class="sleep-l">★ Sleep · Interlaken</div><div class="sleep-name"><a href="https://www.villa.ch" target="_blank" rel="noopener">Backpackers Villa Sonnenhof</a> — twin private room, free breakfast</div></div>
+      <div class="sleep-price">~80 CHF / night for 2 → <b>40 CHF p.p.</b></div>
+    </div>
+  </div>
+</article>
+
+<article class="day">
+  <svg class="day-illustration" viewBox="0 0 800 200" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="sky2" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#B8C7D1"/><stop offset="100%" stop-color="#DFD2B5"/></linearGradient>
+      <linearGradient id="water2" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#4A8C8E"/><stop offset="100%" stop-color="#2E6062"/></linearGradient>
+    </defs>
+    <rect width="800" height="200" fill="url(#sky2)"/>
+    <polygon points="0,140 100,40 180,90 260,30 360,80 440,25 540,75 640,35 740,80 800,50 800,140" fill="#5C7C95"/>
+    <polygon points="80,55 100,40 120,55 110,70" fill="#F2EBDD"/>
+    <polygon points="240,45 260,30 280,50 265,65" fill="#F2EBDD"/>
+    <polygon points="420,40 440,25 462,45 445,62" fill="#F2EBDD"/>
+    <polygon points="618,50 640,35 662,55 645,70" fill="#F2EBDD"/>
+    <path d="M0,140 Q200,150 400,142 T800,140 L800,160 L0,160 Z" fill="#2A3F31" opacity=".7"/>
+    <path d="M0,160 Q200,168 400,162 T800,160 L800,200 L0,200 Z" fill="url(#water2)"/>
+    <path d="M50,175 Q120,172 190,175" stroke="#F2EBDD" stroke-width="1" fill="none" opacity=".4"/>
+    <path d="M300,180 Q380,177 460,180" stroke="#F2EBDD" stroke-width="1" fill="none" opacity=".4"/>
+    <path d="M580,178 Q650,175 720,178" stroke="#F2EBDD" stroke-width="1" fill="none" opacity=".4"/>
+    <path d="M150,188 Q230,185 310,188" stroke="#F2EBDD" stroke-width="1" fill="none" opacity=".3"/>
+    <path d="M480,190 Q560,187 640,190" stroke="#F2EBDD" stroke-width="1" fill="none" opacity=".3"/>
+    <g transform="translate(380,170)">
+      <path d="M0,4 Q15,12 30,4 L26,0 L4,0 Z" fill="#B5462E" stroke="#1B1F2A" stroke-width="1"/>
+      <line x1="15" y1="0" x2="15" y2="-8" stroke="#1B1F2A" stroke-width="1"/>
+      <circle cx="15" cy="-10" r="2" fill="#1B1F2A"/>
+    </g>
+    <polygon points="60,150 70,128 80,150" fill="#2A3F31"/>
+    <polygon points="100,152 109,132 118,152" fill="#2A3F31"/>
+    <polygon points="700,150 710,128 720,150" fill="#2A3F31"/>
+    <polygon points="740,152 749,132 758,152" fill="#2A3F31"/>
+  </svg>
+  <div class="day-head">
+    <div class="day-num"><small>Day · 02</small>II</div>
+    <div>
+      <div class="day-title">Turquoise lake under 3,000m walls</div>
+      <div class="day-route">Interlaken → Spiez → Kandersteg → Oeschinensee → Kandersteg</div>
+    </div>
+    <div class="day-cost">spend<b>~48 CHF</b><span>+ bed</span></div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-time">08:30</div><div class="tl-event"><b>Interlaken West → Spiez → Kandersteg</b> <span class="price">included · STP</span><small>~1h with one easy change at Spiez. Castle on a peninsula visible from the platform.</small></div>
+      <div class="tl-time">09:35</div><div class="tl-event"><b>Drop bags at Kandersteg hotel</b><small>Most welcome early bag drop. Quick cheese-and-bread breakfast on a bench by the church.</small></div>
+      <div class="tl-time">10:15</div><div class="tl-event"><b>Walk to Oeschinensee gondola valley station</b><small>10 min flat walk from the train station. Signposted everywhere.</small></div>
+      <div class="tl-time">10:30</div><div class="tl-event"><b>Gondola up · Oeschinen mountain station</b> <span class="price">22.50 CHF · 50% off</span><small>BOOK THE TIME SLOT ONLINE THE NIGHT BEFORE. Walk-ups can wait hours in summer.</small></div>
+      <div class="tl-time">11:00</div><div class="tl-event"><b>30-min easy walk down to the lake</b><small>Wide gravel path, stroller-friendly. Or pay 10 CHF for the e-shuttle. Walk it.</small></div>
+      <div class="tl-time">11:45</div><div class="tl-event"><b>Oeschinensee · the turquoise photo</b><small>Lake at 1,578m, surrounded by the Blüemlisalp peaks (3,664m). Walk the shoreline. In summer, rent a rowboat (~30 CHF/30min for two).</small></div>
+      <div class="tl-time">13:00</div><div class="tl-event"><b>Lunch at Berghotel Oeschinensee</b> <span class="price">25 CHF</span><small>Lakeside terrace. Order Älplermagronen (alpine mac-and-cheese with apple sauce) — Swiss comfort food, ~22 CHF.</small></div>
+      <div class="tl-time">15:30</div><div class="tl-event"><b>Optional: Heuberg loop hike</b><small>+1.5h, moderate. Best aerial view of the lake. Skip if tired.</small></div>
+      <div class="tl-time">17:00</div><div class="tl-event"><b>Gondola down → Kandersteg village stroll</b><small>Traditional wooden chalets, geraniums on every balcony. The village has 1,200 residents.</small></div>
+      <div class="tl-time">19:30</div><div class="tl-event"><b>Dinner at the hotel restaurant or Restaurant Ritter</b> <span class="price">~30 CHF</span><small>Or supermarket if budget is tight — small Coop near the station.</small></div>
+    </div>
+    <div class="sleep">
+      <div><div class="sleep-l">★ Sleep · Kandersteg</div><div class="sleep-name"><a href="https://www.bernerhof.ch" target="_blank" rel="noopener">Hotel Bernerhof</a> — historic chalet, double room w/ balcony</div></div>
+      <div class="sleep-price">~120 CHF / night for 2 → <b>60 CHF p.p.</b></div>
+    </div>
+  </div>
+</article>
+
+<article class="day">
+  <svg class="day-illustration" viewBox="0 0 800 200" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="sky3" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#DDE3D2"/><stop offset="100%" stop-color="#F2EBDD"/></linearGradient>
+      <linearGradient id="aare" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#5C7C95"/><stop offset="100%" stop-color="#3D5A75"/></linearGradient>
+    </defs>
+    <rect width="800" height="200" fill="url(#sky3)"/>
+    <path d="M0,130 Q200,110 400,125 T800,120 L800,160 L0,160 Z" fill="#3F5A45" opacity=".5"/>
+    <path d="M0,170 Q150,155 300,165 Q400,180 500,165 Q650,155 800,170 L800,200 L0,200 Z" fill="url(#aare)"/>
+    <g transform="translate(120,75)">
+      <rect x="0" y="-20" width="22" height="80" fill="#B5462E" stroke="#1B1F2A" stroke-width="1"/>
+      <polygon points="-2,-20 24,-20 11,-40" fill="#1B1F2A"/>
+      <circle cx="11" cy="0" r="6" fill="#F2EBDD" stroke="#1B1F2A" stroke-width="1"/>
+      <line x1="11" y1="0" x2="11" y2="-4" stroke="#1B1F2A" stroke-width="1"/>
+      <line x1="11" y1="0" x2="14" y2="0" stroke="#1B1F2A" stroke-width="1"/>
+      <g transform="translate(35,15)">
+        <rect width="60" height="45" fill="#DDD0B5" stroke="#1B1F2A" stroke-width="1"/>
+        <polygon points="-2,0 62,0 30,-12" fill="#B5462E" stroke="#1B1F2A" stroke-width="1"/>
+        <rect x="8" y="8" width="6" height="8" fill="#1B1F2A"/><rect x="22" y="8" width="6" height="8" fill="#1B1F2A"/><rect x="36" y="8" width="6" height="8" fill="#1B1F2A"/><rect x="50" y="8" width="6" height="8" fill="#1B1F2A"/>
+        <rect x="8" y="22" width="6" height="8" fill="#1B1F2A"/><rect x="22" y="22" width="6" height="8" fill="#1B1F2A"/><rect x="36" y="22" width="6" height="8" fill="#1B1F2A"/><rect x="50" y="22" width="6" height="8" fill="#1B1F2A"/>
+      </g>
+      <g transform="translate(105,20)">
+        <rect width="55" height="40" fill="#EAE0CB" stroke="#1B1F2A" stroke-width="1"/>
+        <polygon points="-2,0 57,0 27,-10" fill="#B5462E" stroke="#1B1F2A" stroke-width="1"/>
+        <rect x="8" y="6" width="5" height="7" fill="#1B1F2A"/><rect x="20" y="6" width="5" height="7" fill="#1B1F2A"/><rect x="32" y="6" width="5" height="7" fill="#1B1F2A"/><rect x="44" y="6" width="5" height="7" fill="#1B1F2A"/>
+      </g>
+      <g transform="translate(170,10)">
+        <rect width="50" height="50" fill="#DDD0B5" stroke="#1B1F2A" stroke-width="1"/>
+        <polygon points="-2,0 52,0 25,-12" fill="#B5462E" stroke="#1B1F2A" stroke-width="1"/>
+        <rect x="8" y="10" width="5" height="7" fill="#1B1F2A"/><rect x="20" y="10" width="5" height="7" fill="#1B1F2A"/><rect x="32" y="10" width="5" height="7" fill="#1B1F2A"/>
+      </g>
+      <g transform="translate(230,18)">
+        <rect width="55" height="42" fill="#EAE0CB" stroke="#1B1F2A" stroke-width="1"/>
+        <polygon points="-2,0 57,0 27,-10" fill="#B5462E" stroke="#1B1F2A" stroke-width="1"/>
+        <rect x="8" y="8" width="5" height="7" fill="#1B1F2A"/><rect x="20" y="8" width="5" height="7" fill="#1B1F2A"/><rect x="32" y="8" width="5" height="7" fill="#1B1F2A"/><rect x="44" y="8" width="5" height="7" fill="#1B1F2A"/>
+      </g>
+      <g transform="translate(310,-30)">
+        <rect width="22" height="90" fill="#DDD0B5" stroke="#1B1F2A" stroke-width="1"/>
+        <polygon points="-3,0 25,0 11,-30" fill="#1B1F2A"/>
+        <polygon points="3,-30 19,-30 11,-50" fill="#1B1F2A"/>
+        <rect x="8" y="20" width="6" height="12" fill="#1B1F2A"/><rect x="8" y="45" width="6" height="12" fill="#1B1F2A"/>
+      </g>
+      <g transform="translate(345,15)">
+        <rect width="60" height="45" fill="#DDD0B5" stroke="#1B1F2A" stroke-width="1"/>
+        <polygon points="-2,0 62,0 30,-12" fill="#B5462E" stroke="#1B1F2A" stroke-width="1"/>
+        <rect x="8" y="8" width="6" height="8" fill="#1B1F2A"/><rect x="22" y="8" width="6" height="8" fill="#1B1F2A"/><rect x="36" y="8" width="6" height="8" fill="#1B1F2A"/><rect x="50" y="8" width="6" height="8" fill="#1B1F2A"/>
+      </g>
+      <g transform="translate(415,22)">
+        <rect width="50" height="38" fill="#EAE0CB" stroke="#1B1F2A" stroke-width="1"/>
+        <polygon points="-2,0 52,0 25,-10" fill="#B5462E" stroke="#1B1F2A" stroke-width="1"/>
+        <rect x="8" y="6" width="5" height="7" fill="#1B1F2A"/><rect x="20" y="6" width="5" height="7" fill="#1B1F2A"/><rect x="32" y="6" width="5" height="7" fill="#1B1F2A"/>
+      </g>
+      <g transform="translate(475,12)">
+        <rect width="60" height="48" fill="#DDD0B5" stroke="#1B1F2A" stroke-width="1"/>
+        <polygon points="-2,0 62,0 30,-12" fill="#B5462E" stroke="#1B1F2A" stroke-width="1"/>
+        <rect x="8" y="10" width="6" height="8" fill="#1B1F2A"/><rect x="22" y="10" width="6" height="8" fill="#1B1F2A"/><rect x="36" y="10" width="6" height="8" fill="#1B1F2A"/><rect x="50" y="10" width="6" height="8" fill="#1B1F2A"/>
+      </g>
+    </g>
+    <line x1="0" y1="135" x2="800" y2="135" stroke="#1B1F2A" stroke-width="0.5" opacity=".3"/>
+    <path d="M50,182 Q130,179 210,182" stroke="#F2EBDD" stroke-width="1" fill="none" opacity=".5"/>
+    <path d="M580,182 Q660,179 740,182" stroke="#F2EBDD" stroke-width="1" fill="none" opacity=".5"/>
+  </svg>
+  <div class="day-head">
+    <div class="day-num"><small>Day · 03</small>III</div>
+    <div>
+      <div class="day-title">Lake boat to a UNESCO capital</div>
+      <div class="day-route">Kandersteg → Spiez → boat across Lake Thun → Thun → Bern</div>
+    </div>
+    <div class="day-cost">spend<b>~30 CHF</b><span>+ bed</span></div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-time">09:30</div><div class="tl-event"><b>Kandersteg → Spiez</b> <span class="price">included · STP</span><small>~30 min. Drop into the Spiez harbor — castle on a peninsula, vineyards on the slope.</small></div>
+      <div class="tl-time">10:35</div><div class="tl-event"><b>Boat: Spiez → Thun across Lake Thun</b> <span class="price">included · STP</span><small>~1h45 lake cruise. Top deck, sun, alpine peaks reflected in the water. Free with your pass — use it.</small></div>
+      <div class="tl-time">12:30</div><div class="tl-event"><b>Lunch in Thun</b> <span class="price">~20 CHF</span><small>Bahnhofstrasse has cheap-ish takeaway. Or eat by the river under the castle. The covered staircase up to the castle is worth 5 minutes.</small></div>
+      <div class="tl-time">14:00</div><div class="tl-event"><b>Thun → Bern</b> <span class="price">included · STP</span><small>~20 min direct. Fast train. Drop bags at Bern hotel.</small></div>
+      <div class="tl-time">15:30</div><div class="tl-event"><b>Bern Old Town walk</b> <span class="price">FREE</span><small>UNESCO World Heritage. Walk Marktgasse → Kramgasse → Zytglogge clock tower (mechanism from 1530, animated figures every hour). Einstein's apartment at Kramgasse 49.</small></div>
+      <div class="tl-time">17:00</div><div class="tl-event"><b>BärenPark + Aare river walk</b> <span class="price">FREE</span><small>Bears (yes, real ones, the city's mascot) in a hillside park along the river. In summer locals "float" the Aare — bring a swimsuit if it's hot.</small></div>
+      <div class="tl-time">19:30</div><div class="tl-event"><b>Dinner in the arcaded Old Town</b> <span class="price">~25 CHF</span><small>Try Altes Tramdepot brewery (own beer, hearty Swiss food, mid-priced) or Restaurant Della Casa.</small></div>
+    </div>
+    <div class="sleep">
+      <div><div class="sleep-l">★ Sleep · Bern</div><div class="sleep-name"><a href="https://www.bernbackpackers.com" target="_blank" rel="noopener">Bern Backpackers Hotel Glocke</a> — twin private room, Old Town location</div></div>
+      <div class="sleep-price">~100 CHF / night for 2 → <b>50 CHF p.p.</b></div>
+    </div>
+  </div>
+</article>
+
+<article class="day">
+  <svg class="day-illustration" viewBox="0 0 800 200" preserveAspectRatio="xMidYMid slice">
+    <defs><linearGradient id="sky4" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#EAE0CB"/><stop offset="100%" stop-color="#DDD0B5"/></linearGradient></defs>
+    <rect width="800" height="200" fill="url(#sky4)"/>
+    <path d="M0,150 Q200,135 400,148 T800,140 L800,200 L0,200 Z" fill="#3F5A45" opacity=".4"/>
+    <path d="M0,165 Q200,158 400,168 T800,160 L800,200 L0,200 Z" fill="#2A3F31" opacity=".6"/>
+    <line x1="0" y1="178" x2="800" y2="178" stroke="#1B1F2A" stroke-width="1.5"/>
+    <line x1="0" y1="184" x2="800" y2="184" stroke="#1B1F2A" stroke-width="1.5"/>
+    <g stroke="#1B1F2A" stroke-width="1">
+      <line x1="40" y1="176" x2="40" y2="186"/><line x1="100" y1="176" x2="100" y2="186"/>
+      <line x1="160" y1="176" x2="160" y2="186"/><line x1="220" y1="176" x2="220" y2="186"/>
+      <line x1="280" y1="176" x2="280" y2="186"/><line x1="340" y1="176" x2="340" y2="186"/>
+      <line x1="540" y1="176" x2="540" y2="186"/><line x1="600" y1="176" x2="600" y2="186"/>
+      <line x1="660" y1="176" x2="660" y2="186"/><line x1="720" y1="176" x2="720" y2="186"/>
+      <line x1="780" y1="176" x2="780" y2="186"/>
+    </g>
+    <g transform="translate(360,138)">
+      <rect x="0" y="0" width="120" height="38" rx="4" fill="#B5462E" stroke="#1B1F2A" stroke-width="1.5"/>
+      <polygon points="120,0 138,8 138,30 120,38" fill="#B5462E" stroke="#1B1F2A" stroke-width="1.5"/>
+      <rect x="6" y="6" width="20" height="14" rx="1" fill="#F2EBDD" stroke="#1B1F2A" stroke-width="1"/>
+      <rect x="32" y="6" width="20" height="14" rx="1" fill="#F2EBDD" stroke="#1B1F2A" stroke-width="1"/>
+      <rect x="58" y="6" width="20" height="14" rx="1" fill="#F2EBDD" stroke="#1B1F2A" stroke-width="1"/>
+      <rect x="84" y="6" width="20" height="14" rx="1" fill="#F2EBDD" stroke="#1B1F2A" stroke-width="1"/>
+      <rect x="110" y="6" width="14" height="14" rx="1" fill="#F2EBDD" stroke="#1B1F2A" stroke-width="1"/>
+      <text x="40" y="32" font-family="monospace" font-size="9" fill="#F2EBDD">SBB CFF FFS</text>
+      <circle cx="20" cy="40" r="4" fill="#1B1F2A"/><circle cx="50" cy="40" r="4" fill="#1B1F2A"/>
+      <circle cx="80" cy="40" r="4" fill="#1B1F2A"/><circle cx="110" cy="40" r="4" fill="#1B1F2A"/>
+    </g>
+    <g transform="translate(80,50)">
+      <ellipse cx="30" cy="60" rx="32" ry="6" fill="#1B1F2A" opacity=".15"/>
+      <path d="M0,15 L60,15 L55,60 L5,60 Z" fill="#F2EBDD" stroke="#1B1F2A" stroke-width="1.5"/>
+      <ellipse cx="30" cy="15" rx="30" ry="6" fill="#3F2A1B" stroke="#1B1F2A" stroke-width="1.5"/>
+      <ellipse cx="30" cy="14" rx="20" ry="4" fill="#5C3A24"/>
+      <path d="M60,22 Q78,22 78,38 Q78,52 60,50" fill="none" stroke="#1B1F2A" stroke-width="1.5"/>
+      <path d="M20,5 Q22,-5 18,-12" stroke="#1B1F2A" stroke-width="1" fill="none" opacity=".4"/>
+      <path d="M30,5 Q32,-5 28,-15" stroke="#1B1F2A" stroke-width="1" fill="none" opacity=".4"/>
+      <path d="M40,5 Q42,-5 38,-12" stroke="#1B1F2A" stroke-width="1" fill="none" opacity=".4"/>
+    </g>
+    <g transform="translate(640,75)">
+      <path d="M0,30 Q15,5 35,15 Q55,5 70,30 Q60,40 35,38 Q10,40 0,30 Z" fill="#B5462E" stroke="#1B1F2A" stroke-width="1.5"/>
+      <path d="M10,28 Q20,18 35,22" stroke="#1B1F2A" stroke-width="1" fill="none" opacity=".5"/>
+      <path d="M35,22 Q50,18 60,28" stroke="#1B1F2A" stroke-width="1" fill="none" opacity=".5"/>
+      <ellipse cx="35" cy="42" rx="38" ry="4" fill="#1B1F2A" opacity=".15"/>
+    </g>
+  </svg>
+  <div class="day-head">
+    <div class="day-num"><small>Day · 04</small>IV</div>
+    <div>
+      <div class="day-title">A slow morning, then home</div>
+      <div class="day-route">Bern → Zürich</div>
+    </div>
+    <div class="day-cost">spend<b>~12 CHF</b><span>coffee + bun</span></div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-time">10:00</div><div class="tl-event"><b>Coffee + Nussgipfel at Adriano's or Café Einstein</b> <span class="price">10 CHF</span><small>Bern's signature pastry. Both bakeries are walking distance from the station.</small></div>
+      <div class="tl-time">11:00</div><div class="tl-event"><b>Climb Bern Münster tower</b> <span class="price">~5 CHF</span><small>344 stone steps, best 360° view of the river-loop Old Town. Skip if rushed.</small></div>
+      <div class="tl-time">12:30</div><div class="tl-event"><b>Bern HB → Zürich HB</b> <span class="price">included · STP</span><small>~1h direct. Pass valid until 5am the day after Day 4 — verify your activation dates.</small></div>
+      <div class="tl-time">13:30</div><div class="tl-event"><b>Back in Zürich · trip ends</b><small>Sleep at your covered Zürich stay.</small></div>
+    </div>
+  </div>
+</article>
+
+<div class="sec-label">Budget · per person · in CHF and EUR</div>
+<div class="budget">
+  <table>
+    <thead><tr><th>Item</th><th>CHF</th><th>EUR</th></tr></thead>
+    <tbody>
+      <tr><td><b>Swiss Travel Pass Youth · 4-day · 2nd class</b><small>Activate Day 1, expires after Day 4. 30% youth discount applies.</small></td><td>216.00</td><td>~232</td></tr>
+      <tr class="subtotal"><td>Transport pass subtotal</td><td>216.00</td><td>232</td></tr>
+      <tr><td>Schynige Platte cogwheel return<small>50% discount with STP. Full price ~70 CHF.</small></td><td>34.00</td><td>~36</td></tr>
+      <tr><td>Oeschinensee gondola return<small>50% discount with STP. 22.50 CHF in summer (15.06–21.09).</small></td><td>22.50</td><td>~24</td></tr>
+      <tr><td>Optional · Bern Münster tower<small>Skip if rushed. Not included in pass.</small></td><td>5.00</td><td>~5</td></tr>
+      <tr class="subtotal"><td>Activities subtotal</td><td>61.50</td><td>65</td></tr>
+      <tr><td>Night 1 · Interlaken (Backpackers Villa, twin)<small>~80 CHF for 2 → 40 p.p. Includes breakfast.</small></td><td>40.00</td><td>~43</td></tr>
+      <tr><td>Night 2 · Kandersteg (Hotel Bernerhof, double)<small>~120 CHF for 2 → 60 p.p.</small></td><td>60.00</td><td>~64</td></tr>
+      <tr><td>Night 3 · Bern (Backpackers Glocke, twin private)<small>~100 CHF for 2 → 50 p.p.</small></td><td>50.00</td><td>~53</td></tr>
+      <tr class="subtotal"><td>Sleep subtotal · 3 nights</td><td>150.00</td><td>160</td></tr>
+      <tr><td>Lunches × 3 (mostly restaurants)<small>~25 CHF each. Cut to ~10 with supermarket sandwiches.</small></td><td>75.00</td><td>~80</td></tr>
+      <tr><td>Dinners × 3 (mix restaurant + cook in hostel)<small>~25 CHF avg. Use hostel kitchens for at least one night.</small></td><td>75.00</td><td>~80</td></tr>
+      <tr><td>Coffees, breakfasts, snacks, water<small>Tap water is excellent and free everywhere.</small></td><td>40.00</td><td>~43</td></tr>
+      <tr class="subtotal"><td>Food subtotal · ~63 CHF/day</td><td>190.00</td><td>203</td></tr>
+      <tr class="total"><td>TOTAL · per person<small>multiply × 2 for the couple in Excel</small></td><td>617.50</td><td>~660</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="warn">Honest read: that's <b>~660 EUR per person</b>, ~160 EUR over your 500 EUR target. To hit 500 EUR, swap restaurant lunches for Coop picnics (saves ~50 EUR), skip the Schynige Platte cogwheel for Harderkulm above Interlaken (~10 CHF instead of 34, saves ~24 EUR), and pick the cheapest Kandersteg option (Gemmi-Lodge, ~75 CHF/double, saves ~25 EUR). That brings you under 525 EUR.</div>
+
+<div class="sec-label">Where to Buy · Verified Official Sources</div>
+<div class="buy-grid">
+  <a class="buy" href="https://www.sbb.ch/en/tickets-offers/tickets/swiss-travel-pass.html" target="_blank" rel="noopener">
+    <div class="tag">Transport · Critical</div><h3>Swiss Travel Pass Youth</h3>
+    <p>Buy on the official SBB tourist webshop. PDF arrives instantly. Youth = under 25, 30% off. Pick "Consecutive 4 days · 2nd class".</p>
+    <div class="url">sbb.ch/en/tickets-offers/tickets/swiss-travel-pass</div>
+  </a>
+  <a class="buy" href="https://www.swissrailways.com/en/buy-schynige-platte-ticket" target="_blank" rel="noopener">
+    <div class="tag">Day 1 · Cogwheel</div><h3>Schynige Platte ticket</h3>
+    <p>Official Swiss Railways shop. Or buy at Wilderswil station the morning of. Operating 13 June – 25 October 2026 only.</p>
+    <div class="url">swissrailways.com/en/buy-schynige-platte-ticket</div>
+  </a>
+  <a class="buy" href="https://www.oeschinensee.ch/en/" target="_blank" rel="noopener">
+    <div class="tag">Day 2 · Gondola</div><h3>Oeschinensee gondola</h3>
+    <p>Official site. <b>Reserve a time slot</b> the night before — boarding pass is required in summer or you'll wait hours.</p>
+    <div class="url">oeschinensee.ch/en/</div>
+  </a>
+  <a class="buy" href="https://www.hostelworld.com/" target="_blank" rel="noopener">
+    <div class="tag">Bed · Night 1</div><h3>Backpackers Villa, Interlaken</h3>
+    <p>Twin private room with free breakfast. 9.66/10 on Hostelworld. Book direct or via Hostelworld.</p>
+    <div class="url">hostelworld.com → Interlaken → Backpackers Villa Sonnenhof</div>
+  </a>
+  <a class="buy" href="https://www.bernerhof.ch" target="_blank" rel="noopener">
+    <div class="tag">Bed · Night 2</div><h3>Hotel Bernerhof, Kandersteg</h3>
+    <p>Family-run chalet hotel, walking distance from train + gondola. Book direct on the hotel site for best rate.</p>
+    <div class="url">bernerhof.ch</div>
+  </a>
+  <a class="buy" href="https://www.bernbackpackers.com" target="_blank" rel="noopener">
+    <div class="tag">Bed · Night 3</div><h3>Bern Backpackers Hotel Glocke</h3>
+    <p>Right in the UNESCO Old Town. Twin private rooms available. Book via their site or Booking.com.</p>
+    <div class="url">bernbackpackers.com</div>
+  </a>
+</div>
+
+<div class="sec-label">Reading Notes for the Couple</div>
+<div class="tips">
+  <h4>Tap water = free Evian.</h4>
+  <p>Every public fountain in Switzerland is drinking water by default. Refill bottles. A 1L bottle of water at a kiosk is 4 CHF — that's a sandwich.</p>
+  <h4>Coop &amp; Migros close at 7 PM.</h4>
+  <p>Earlier on Saturdays, closed Sundays. Stock up on Saturday morning. Coop Pronto kiosks at train stations stay open later for emergencies.</p>
+  <h4>The pass is on your phone.</h4>
+  <p>PDF on screen is fine. Inspectors scan the QR. Screenshot it in case of no signal in mountain tunnels.</p>
+  <h4>Right side of the train.</h4>
+  <p>Zürich → Interlaken: right side has lake views (Lake Thun). Schynige Platte cogwheel: right side for the Jungfrau panorama. Lake Thun boat: top deck.</p>
+  <h4>Reserve Oeschinensee.</h4>
+  <p>The boarding-pass time slot is required in summer for public-transport visitors. Free to reserve, free to rebook. Don't show up without one.</p>
+  <h4>Weather is god here.</h4>
+  <p>If Day 1 is rainforest-grey, swap Schynige Platte for the next sunny day and do something low-altitude (Bern). Mountain views in clouds are wasted money.</p>
+  <h4>Currency: pay CHF, not EUR.</h4>
+  <p>Many places accept EUR but the rate is brutal. Use a debit card with no foreign fees (Revolut, N26, BBVA Aqua) and pay in CHF every time.</p>
+  <h4>The trains run on time.</h4>
+  <p>If your connection says 4 minutes, you have 4 minutes. SBB punctuality is real. Don't relax until you're seated on the next train.</p>
+</div>
+
+<footer>
+  <span>Switzerland · Itinerary 001 · For Anna &amp; Boio</span>
+  <span>Last revised April 2026 · Verify prices at booking</span>
+</footer>
+
+</div>
+
+</body>
+</html>
